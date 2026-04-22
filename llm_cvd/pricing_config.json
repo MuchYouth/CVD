@@ -1,0 +1,18 @@
+{
+  "chatgpt": {
+    "input_per_1m": 0.0,
+    "output_per_1m": 0.0
+  },
+  "claude": {
+    "input_per_1m": 0.0,
+    "output_per_1m": 0.0
+  },
+  "gemini": {
+    "input_per_1m": 0.0,
+    "output_per_1m": 0.0
+  },
+  "grok": {
+    "input_per_1m": 0.0,
+    "output_per_1m": 0.0
+  }
+}
