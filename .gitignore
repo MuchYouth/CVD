@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+cache/
+indexes/
+results/
+dataset/
+.codex
+.env
+juliet-playground/

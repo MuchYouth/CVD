@@ -1,4 +1,4 @@
-# modules/ai — LLM 클라이언트 모듈
+# modules/ai — LLM 클라이언트 모듈 by 주언, 서준, 상권
 
 여러 LLM 제공자(Claude, ChatGPT, Gemini, Grok)를 **동일한 인터페이스**로 사용할 수 있게 추상화한 모듈입니다.
 

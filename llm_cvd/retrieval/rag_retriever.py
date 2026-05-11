@@ -14,8 +14,8 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 
 
-THIS_DIR = Path(__file__).resolve().parent
-DEFAULT_INDEX_DIR = THIS_DIR / "indexes"
+PACKAGE_DIR = Path(__file__).resolve().parents[1]
+DEFAULT_INDEX_DIR = PACKAGE_DIR / "indexes"
 
 
 @dataclass
@@ -28,6 +28,7 @@ class CodeBertFaissRetriever:
     embedding_model_name: str = "microsoft/codebert-base"
     device: str | None = None
     rebuild_index: bool = False
+    index_batch_size: int = 16
 
     def __post_init__(self) -> None:
         self.device = self.device or ("cuda" if torch.cuda.is_available() else "cpu")
@@ -43,8 +44,24 @@ class CodeBertFaissRetriever:
     def retrieve(self, code: str, k: int = 6) -> list[dict[str, Any]]:
         embedding = np.array([self.get_embedding(code)], dtype=np.float32)
         _, indices = self.index.search(embedding, k)
+        return self._metadata_from_indices(indices[0])
+
+    def retrieve_many(
+        self,
+        codes: list[str],
+        k: int = 6,
+        batch_size: int = 16,
+        desc: str = "Embedding target records",
+    ) -> list[list[dict[str, Any]]]:
+        if not codes:
+            return []
+        embeddings = self.get_embeddings(codes, batch_size=batch_size, desc=desc)
+        _, indices = self.index.search(embeddings, k)
+        return [self._metadata_from_indices(row_indices) for row_indices in indices]
+
+    def _metadata_from_indices(self, indices: np.ndarray) -> list[dict[str, Any]]:
         examples = []
-        for idx in indices[0]:
+        for idx in indices:
             idx_int = int(idx)
             if idx_int < 0 or idx_int >= len(self.metadata):
                 continue
@@ -52,17 +69,36 @@ class CodeBertFaissRetriever:
         return examples
 
     def get_embedding(self, code_snippet: str) -> np.ndarray:
+        return self.get_embeddings([code_snippet], batch_size=1)[0]
+
+    def get_embeddings(
+        self,
+        code_snippets: list[str],
+        batch_size: int = 16,
+        desc: str | None = None,
+    ) -> np.ndarray:
+        embeddings = []
+        batch_size = max(1, batch_size)
+        batch_starts = range(0, len(code_snippets), batch_size)
+        if desc:
+            batch_starts = progress(batch_starts, desc=desc)
+        for start in batch_starts:
+            batch = code_snippets[start : start + batch_size]
+            embeddings.append(self._embed_batch(batch))
+        return np.vstack(embeddings).astype(np.float32)
+
+    def _embed_batch(self, code_snippets: list[str]) -> np.ndarray:
         inputs = self.embedding_tokenizer(
-            code_snippet,
+            code_snippets,
             return_tensors="pt",
             truncation=True,
-            padding="max_length",
+            padding=True,
             max_length=512,
         )
         inputs = {key: value.to(self.device) for key, value in inputs.items()}
         with torch.no_grad():
             outputs = self.embedding_model(**inputs)
-        return outputs.last_hidden_state[:, 0, :].squeeze().detach().cpu().numpy()
+        return outputs.last_hidden_state[:, 0, :].detach().cpu().numpy()
 
     def _load_or_build_index(self) -> tuple[faiss.Index, list[dict[str, Any]]]:
         self.index_dir.mkdir(parents=True, exist_ok=True)
@@ -86,12 +122,11 @@ class CodeBertFaissRetriever:
 
         started = time.perf_counter()
         log_retriever(f"Building embeddings for {len(self.train_records)} train records")
-        embeddings = np.array(
-            [
-                self.get_embedding(record["code"])
-                for record in progress(self.train_records, desc="Embedding Juliet records")
-            ],
-            dtype=np.float32,
+        train_codes = [str(record["code"]) for record in self.train_records]
+        embeddings = self.get_embeddings(
+            train_codes,
+            batch_size=self.index_batch_size,
+            desc="Embedding Juliet records",
         )
         log_retriever(f"Built embeddings in {format_seconds(time.perf_counter() - started)}")
         started = time.perf_counter()

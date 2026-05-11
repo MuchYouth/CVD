@@ -1,10 +1,12 @@
-"""Dataset loader for Juliet test suite training data and Real_Vul_data.csv tests."""
+"""Dataset loader for Juliet training data and Real_Vul_data.csv tests."""
 
 from __future__ import annotations
 
+import csv
 import json
 import random
 import re
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -88,7 +90,7 @@ def parse_real_vul_csv(text: str) -> list[dict[str, str]]:
     if not lines:
         return []
     header = lines[0].split(",")
-    if header[:9] != [
+    expected_real_vul_header = [
         "file_name",
         "unique_id",
         "target",
@@ -98,7 +100,10 @@ def parse_real_vul_csv(text: str) -> list[dict[str, str]]:
         "commit_hash",
         "dataset_type",
         "processed_func",
-    ]:
+    ]
+    if header[:9] != expected_real_vul_header:
+        if {"file_name", "unique_id", "target", "processed_func"}.issubset(header):
+            return parse_standard_real_vul_csv(text)
         raise ValueError("Unexpected Real_Vul_data.csv header.")
 
     starts = []
@@ -123,6 +128,26 @@ def parse_real_vul_csv(text: str) -> list[dict[str, str]]:
         row["processed_func"] = code
         records.append(row)
     return records
+
+
+def parse_standard_real_vul_csv(text: str) -> list[dict[str, str]]:
+    """Parse Real_Vul-style CSV files that are valid RFC CSV."""
+    set_csv_field_size_limit()
+    reader = csv.DictReader(text.splitlines())
+    return [
+        {str(key): value or "" for key, value in row.items() if key is not None}
+        for row in reader
+    ]
+
+
+def set_csv_field_size_limit() -> None:
+    limit = sys.maxsize
+    while True:
+        try:
+            csv.field_size_limit(limit)
+            return
+        except OverflowError:
+            limit //= 10
 
 
 def split_fixed_prefix(record: str, expected_commas: int) -> tuple[str, str]:
@@ -173,18 +198,32 @@ def load_juliet_train_records(
     rebuild_cache: bool = False,
 ) -> list[dict[str, Any]]:
     root = Path(juliet_root)
+    if not root.exists():
+        raise FileNotFoundError(f"Juliet train source does not exist: {root}")
+
     cache_path = None
     if cache_dir:
-        cache_path = Path(cache_dir) / "juliet_train_functions.jsonl"
+        cache_path = Path(cache_dir) / get_train_cache_name(root)
         if cache_path.exists() and not rebuild_cache:
             started = time.perf_counter()
             log_loader(f"Reading Juliet train cache: {cache_path}")
             records = read_jsonl(cache_path)
-            log_loader(
-                f"Read {len(records)} Juliet train records from cache "
-                f"in {format_seconds(time.perf_counter() - started)}"
-            )
-            return records
+            if not records:
+                log_loader(f"Cache {cache_path} is empty; rebuilding from source")
+            else:
+                log_loader(
+                    f"Read {len(records)} Juliet train records from cache "
+                    f"in {format_seconds(time.perf_counter() - started)}"
+                )
+                return records
+
+    if root.is_file():
+        records = load_juliet_csv_train_records(root)
+        if cache_path:
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            log_loader(f"Writing Juliet train cache: {cache_path}")
+            write_jsonl(cache_path, records)
+        return records
 
     records = []
     testcase_root = root / "C" / "testcases"
@@ -207,6 +246,39 @@ def load_juliet_train_records(
         write_jsonl(cache_path, records)
     log_loader(f"Loaded {len(records)} Juliet train function records")
     return records
+
+
+def get_train_cache_name(source: Path) -> str:
+    if source.is_file():
+        return f"{source.stem}_train_records.jsonl"
+    return "juliet_train_functions.jsonl"
+
+
+def load_juliet_csv_train_records(path: Path) -> list[dict[str, Any]]:
+    """Load preprocessed Juliet train records from a Real_Vul-style CSV file."""
+    log_loader(f"Loading Juliet train CSV: {path}")
+    records = parse_real_vul_csv(path.read_text(encoding="utf-8", errors="replace"))
+    rows = []
+    for record in records:
+        code = record.get("processed_func", "").strip()
+        target = record.get("target", "").strip()
+        if not code or target not in {"0", "1"}:
+            continue
+        unique_id = record.get("unique_id") or len(rows)
+        rows.append(
+            {
+                "sample_id": f"juliet-csv::{unique_id}",
+                "code": code,
+                "label": int(target),
+                "label_text": "Vulnerable" if target == "1" else "Safe",
+                "db_name": "juliet",
+                "project": record.get("project", ""),
+                "dataset_type": record.get("dataset_type", ""),
+                "source": str(path),
+            }
+        )
+    log_loader(f"Loaded {len(rows)} Juliet CSV train records")
+    return rows
 
 
 def extract_labeled_functions(

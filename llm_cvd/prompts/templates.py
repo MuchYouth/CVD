@@ -49,6 +49,23 @@ def build_few_shot_prompt(
     return "\n".join(parts)
 
 
+def build_zero_shot_prompt(target_code: str) -> str:
+    """Build a direct classification prompt without retrieved examples."""
+    parts = [
+        (
+            "Classify the source code into Vulnerable or Safe, and return the "
+            "answer as the corresponding label."
+        ),
+        "",
+        "Code:",
+        str(target_code),
+        "Answer with exactly one label, either Vulnerable or Safe.",
+        "Label:",
+    ]
+
+    return "\n".join(parts)
+
+
 def parse_label(raw_response: str | None) -> str | None:
     """Parse a provider response into Vulnerable/Safe, or None if ambiguous."""
     if raw_response is None:

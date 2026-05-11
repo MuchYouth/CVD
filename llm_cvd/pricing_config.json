@@ -1,18 +1,34 @@
 {
   "chatgpt": {
-    "input_per_1m": 0.0,
-    "output_per_1m": 0.0
+    "input_per_1m": 2.5,
+    "output_per_1m": 10.0
+  },
+  "gpt-4o": {
+    "input_per_1m": 2.5,
+    "output_per_1m": 10.0
   },
   "claude": {
-    "input_per_1m": 0.0,
-    "output_per_1m": 0.0
+    "input_per_1m": 3.0,
+    "output_per_1m": 15.0
+  },
+  "claude-sonnet-4-5-20250929": {
+    "input_per_1m": 3.0,
+    "output_per_1m": 15.0
   },
   "gemini": {
-    "input_per_1m": 0.0,
-    "output_per_1m": 0.0
+    "input_per_1m": 1.25,
+    "output_per_1m": 10.0
+  },
+  "gemini-2.5-pro": {
+    "input_per_1m": 1.25,
+    "output_per_1m": 10.0
   },
   "grok": {
-    "input_per_1m": 0.0,
-    "output_per_1m": 0.0
+    "input_per_1m": 0.2,
+    "output_per_1m": 0.5
+  },
+  "grok-4-1-fast-non-reasoning": {
+    "input_per_1m": 0.2,
+    "output_per_1m": 0.5
   }
 }

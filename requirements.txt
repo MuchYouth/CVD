@@ -1,6 +1,8 @@
 openai
 anthropic
+xai-sdk
 google-generativeai
+google-genai
 numpy
 pandas
 torch

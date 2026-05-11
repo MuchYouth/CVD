@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import os
 import sys
+import threading
 import time
 import types
 from dataclasses import dataclass
@@ -17,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -51,7 +52,15 @@ class UsageTracker:
         self.output_tokens = output_tokens
 
 
-TRACKER = UsageTracker()
+_TRACKER_LOCAL = threading.local()
+
+
+def get_usage_tracker() -> UsageTracker:
+    tracker = getattr(_TRACKER_LOCAL, "tracker", None)
+    if tracker is None:
+        tracker = UsageTracker()
+        _TRACKER_LOCAL.tracker = tracker
+    return tracker
 
 
 MODEL_ENV_BY_PROVIDER = {
@@ -77,11 +86,11 @@ def install_llm_api_shims() -> None:
     config_mod.get_google_api_key = lambda: os.environ["GOOGLE_API_KEY"]
     config_mod.get_grok_api_key = lambda: os.environ["XAI_API_KEY"]
     config_mod.get_openai_model = lambda: os.getenv("OPENAI_MODEL", "gpt-4o")
-    config_mod.get_claude_model = lambda: os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-latest")
-    config_mod.get_gemini_model = lambda: os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
-    config_mod.get_grok_model = lambda: os.getenv("GROK_MODEL", "grok-beta")
+    config_mod.get_claude_model = lambda: os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+    config_mod.get_gemini_model = lambda: os.getenv("GEMINI_MODEL", "gemini-2.5-pro")
+    config_mod.get_grok_model = lambda: os.getenv("GROK_MODEL", "grok-4-1-fast-non-reasoning")
     config_mod.get_llm_provider = lambda: os.getenv("LLM_PROVIDER", "claude")
-    metrics_mod.get_metrics_tracker = lambda: TRACKER
+    metrics_mod.get_metrics_tracker = get_usage_tracker
 
     modules_pkg.core = core_pkg
     core_pkg.config = config_mod
@@ -119,10 +128,10 @@ class ExperimentClient:
         prompt: str,
         system_prompt: str | None = None,
         max_tokens: int = 8,
-        temperature: float = 0.0,
     ) -> LLMResult:
         start = time.perf_counter()
-        TRACKER.reset()
+        tracker = get_usage_tracker()
+        tracker.reset()
         try:
             text = self.base_client.generate_text(
                 prompt=prompt,
@@ -130,8 +139,8 @@ class ExperimentClient:
                 max_tokens=max_tokens,
             )
             latency = time.perf_counter() - start
-            input_tokens = TRACKER.input_tokens
-            output_tokens = TRACKER.output_tokens
+            input_tokens = tracker.input_tokens
+            output_tokens = tracker.output_tokens
             total_tokens = (
                 input_tokens + output_tokens
                 if input_tokens is not None and output_tokens is not None
