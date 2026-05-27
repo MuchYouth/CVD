@@ -92,6 +92,10 @@ def main() -> None:
 
     rows = []
     tokenizer = retriever.embedding_tokenizer
+    embedding_window = (
+        f"{'tail' if retriever.embedding_truncation_side == 'left' else 'head'}_"
+        f"{retriever.embedding_max_length}"
+    )
     for query_offset, query in enumerate(selected):
         query_code = str(query["code"])
         query_tokens = count_tokens(tokenizer, query_code)
@@ -110,7 +114,8 @@ def main() -> None:
                     "query_code_chars": len(query_code),
                     "query_code_lines": line_count(query_code),
                     "query_codebert_tokens": query_tokens,
-                    "query_truncated_for_embedding": query_tokens > 512,
+                    "query_truncated_for_embedding": query_tokens > retriever.embedding_max_length,
+                    "embedding_token_window": embedding_window,
                     "rank": rank,
                     "faiss_l2_distance": float(distance),
                     "retrieved_index": int(retrieved_index),

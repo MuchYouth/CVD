@@ -87,6 +87,12 @@ def parse_args() -> argparse.Namespace:
         help="Maximum CodeBERT tokens used by the RAG embedding path.",
     )
     parser.add_argument(
+        "--embedding-truncation-side",
+        choices=("left", "right"),
+        default="left",
+        help="Tokenizer truncation side used by the RAG embedding path. 'left' keeps tail tokens.",
+    )
+    parser.add_argument(
         "--include-token-list",
         action="store_true",
         help="Include raw CodeBERT token lists in grouped HTML. This makes the file much heavier.",
@@ -122,6 +128,7 @@ def main() -> None:
             rag_dataset_root=Path(args.rag_dataset_root),
             embedding_model_name=args.embedding_model_name,
             max_rag_tokens=args.max_rag_tokens,
+            embedding_truncation_side=args.embedding_truncation_side,
             include_token_list=args.include_token_list,
         )
 
@@ -336,10 +343,12 @@ def write_grouped_full_html(
     rag_dataset_root: Path,
     embedding_model_name: str,
     max_rag_tokens: int,
+    embedding_truncation_side: str,
     include_token_list: bool,
 ) -> None:
     full_codes = load_full_code_maps(target_dataset_csv, rag_dataset_root)
     tokenizer = load_embedding_tokenizer(embedding_model_name)
+    tokenizer.truncation_side = embedding_truncation_side
     token_cache: dict[str, dict[str, str | bool | int]] = {}
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in rows:
@@ -478,6 +487,7 @@ textarea {
                 tokenizer,
                 query_code,
                 max_rag_tokens=max_rag_tokens,
+                truncation_side=embedding_truncation_side,
                 cache=token_cache,
                 include_token_list=include_token_list,
             )
@@ -501,6 +511,7 @@ textarea {
                     tokenizer,
                     retrieved_code,
                     max_rag_tokens=max_rag_tokens,
+                    truncation_side=embedding_truncation_side,
                     cache=token_cache,
                     include_token_list=include_token_list,
                 )
@@ -620,25 +631,33 @@ def token_info(
     tokenizer,
     code: str,
     max_rag_tokens: int,
+    truncation_side: str,
     cache: dict[str, dict[str, str | bool | int]],
     include_token_list: bool,
 ) -> dict[str, str | bool | int]:
-    cache_key = f"{max_rag_tokens}\0{code}"
+    cache_key = f"{max_rag_tokens}\0{truncation_side}\0{code}"
     if cache_key in cache:
         return cache[cache_key]
 
     token_count = len(tokenizer.tokenize(code)) + tokenizer.num_special_tokens_to_add(pair=False)
-    rag_ids = tokenizer.encode(
-        code,
-        add_special_tokens=True,
-        truncation=True,
-        max_length=max_rag_tokens,
-    )
+    old_truncation_side = tokenizer.truncation_side
+    tokenizer.truncation_side = truncation_side
+    try:
+        rag_ids = tokenizer.encode(
+            code,
+            add_special_tokens=True,
+            truncation=True,
+            max_length=max_rag_tokens,
+        )
+    finally:
+        tokenizer.truncation_side = old_truncation_side
     truncated = token_count > max_rag_tokens
+    kept_side = "tail" if truncation_side == "left" else "head"
     info = {
         "total_tokens": token_count,
         "rag_tokens": len(rag_ids),
         "max_rag_tokens": max_rag_tokens,
+        "kept_side": kept_side,
         "truncated": truncated,
         "decoded": tokenizer.decode(rag_ids, skip_special_tokens=True) if truncated else "",
     }
@@ -659,7 +678,8 @@ def write_token_box(
         "<div class=\"token-box\">\n"
         f"<div class=\"token-meta\"><strong>{html.escape(title)}</strong>: "
         f"{info['rag_tokens']} / {info['total_tokens']} tokens used "
-        f"(max {info['max_rag_tokens']}, truncated: {truncated_text})</div>\n"
+        f"(max {info['max_rag_tokens']}, kept: {info['kept_side']}, "
+        f"truncated: {truncated_text})</div>\n"
     )
     if info["truncated"]:
         handle.write(

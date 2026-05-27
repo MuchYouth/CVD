@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import pickle
 import time
 from dataclasses import dataclass
@@ -29,15 +30,27 @@ class CodeBertFaissRetriever:
     device: str | None = None
     rebuild_index: bool = False
     index_batch_size: int = 16
+    embedding_max_length: int = 512
+    embedding_truncation_side: str = "left"
 
     def __post_init__(self) -> None:
+        if self.embedding_truncation_side not in {"left", "right"}:
+            raise ValueError("embedding_truncation_side must be 'left' or 'right'")
+        if self.embedding_max_length < 1:
+            raise ValueError("embedding_max_length must be at least 1")
         self.device = self.device or ("cuda" if torch.cuda.is_available() else "cpu")
         log_retriever(f"Using embedding device: {self.device}")
         started = time.perf_counter()
         log_retriever(f"Loading embedding model: {self.embedding_model_name}")
         self.embedding_tokenizer = AutoTokenizer.from_pretrained(self.embedding_model_name)
+        self.embedding_tokenizer.truncation_side = self.embedding_truncation_side
         self.embedding_model = AutoModel.from_pretrained(self.embedding_model_name).to(self.device)
         self.embedding_model.eval()
+        kept_side = "tail" if self.embedding_truncation_side == "left" else "head"
+        log_retriever(
+            f"Embedding truncation: keep {kept_side} "
+            f"{self.embedding_max_length} tokens"
+        )
         log_retriever(f"Loaded embedding model in {format_seconds(time.perf_counter() - started)}")
         self.index, self.metadata = self._load_or_build_index()
 
@@ -93,7 +106,7 @@ class CodeBertFaissRetriever:
             return_tensors="pt",
             truncation=True,
             padding=True,
-            max_length=512,
+            max_length=self.embedding_max_length,
         )
         inputs = {key: value.to(self.device) for key, value in inputs.items()}
         with torch.no_grad():
@@ -104,18 +117,15 @@ class CodeBertFaissRetriever:
         self.index_dir.mkdir(parents=True, exist_ok=True)
         index_path = self.index_dir / f"{self.index_name}.index"
         metadata_path = self.index_dir / f"{self.index_name}_metadata.pkl"
+        config_path = self.index_dir / f"{self.index_name}_embedding_config.json"
 
         if index_path.exists() and metadata_path.exists() and not self.rebuild_index:
-            started = time.perf_counter()
-            log_retriever(f"Reading FAISS index: {index_path}")
-            index = faiss.read_index(str(index_path))
-            with metadata_path.open("rb") as handle:
-                metadata = pickle.load(handle)
+            if self._index_config_matches(config_path):
+                return self._read_index(index_path, metadata_path)
             log_retriever(
-                f"Loaded FAISS index with {len(metadata)} records "
-                f"in {format_seconds(time.perf_counter() - started)}"
+                "Existing FAISS index embedding config is missing or different; "
+                "rebuilding index"
             )
-            return index, metadata
 
         if not self.train_records:
             raise ValueError("No Juliet train records were loaded.")
@@ -136,10 +146,45 @@ class CodeBertFaissRetriever:
         faiss.write_index(index, str(index_path))
         with metadata_path.open("wb") as handle:
             pickle.dump(self.train_records, handle)
+        with config_path.open("w", encoding="utf-8") as handle:
+            json.dump(self._embedding_config(), handle, indent=2, sort_keys=True)
+            handle.write("\n")
         log_retriever(
             f"Saved FAISS index and metadata in {format_seconds(time.perf_counter() - started)}"
         )
         return index, self.train_records
+
+    def _read_index(
+        self,
+        index_path: Path,
+        metadata_path: Path,
+    ) -> tuple[faiss.Index, list[dict[str, Any]]]:
+        started = time.perf_counter()
+        log_retriever(f"Reading FAISS index: {index_path}")
+        index = faiss.read_index(str(index_path))
+        with metadata_path.open("rb") as handle:
+            metadata = pickle.load(handle)
+        log_retriever(
+            f"Loaded FAISS index with {len(metadata)} records "
+            f"in {format_seconds(time.perf_counter() - started)}"
+        )
+        return index, metadata
+
+    def _index_config_matches(self, config_path: Path) -> bool:
+        if not config_path.exists():
+            return False
+        try:
+            with config_path.open("r", encoding="utf-8") as handle:
+                return json.load(handle) == self._embedding_config()
+        except (OSError, json.JSONDecodeError):
+            return False
+
+    def _embedding_config(self) -> dict[str, Any]:
+        return {
+            "embedding_model_name": self.embedding_model_name,
+            "embedding_max_length": self.embedding_max_length,
+            "embedding_truncation_side": self.embedding_truncation_side,
+        }
 
 
 def log_retriever(message: str) -> None:
