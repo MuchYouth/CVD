@@ -1,0 +1,71 @@
+{
+  "bug_type": "API_MISUSE",
+  "qualifier": "FormatString.",
+  "severity": "ERROR",
+  "line": 41,
+  "column": 9,
+  "procedure": "CWE134_Uncontrolled_Format_String__char_environment_vprintf_41_bad",
+  "procedure_start_line": 51,
+  "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+  "bug_trace": [
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+        "line_number": 59,
+        "column_number": 30,
+        "description": "input, getenv",
+        "feature": "[\"Input\",\"getenv\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c#L59"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+        "line_number": 64,
+        "column_number": 13,
+        "description": "library_call, strncat, (n$3 + n$4), n$5",
+        "feature": "[\"LibraryCall\",\"strncat\",\"(n$3 + n$4), n$5\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c#L64"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+        "line_number": 67,
+        "column_number": 5,
+        "description": "call, badSink",
+        "feature": "[\"Call\",\"badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c#L67"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+        "line_number": 48,
+        "column_number": 5,
+        "description": "call, badVaSink",
+        "feature": "[\"Call\",\"badVaSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+        "line_number": 41,
+        "column_number": 9,
+        "description": "format_string, vprintf, n$1",
+        "feature": "[\"FormatString\",\"vprintf\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c#L41"
+      }
+    ]
+  ],
+  "key": "CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c|CWE134_Uncontrolled_Format_String__char_environment_vprintf_41_bad|API_MISUSE",
+  "hash": "5a0cf947a5693db6ece0283c4a9a7518",
+  "bug_type_hum": "Api Misuse",
+  "extras": {
+    "bug_src_loc": {
+      "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c",
+      "lnum": 59,
+      "cnum": 30,
+      "enum": 0
+    }
+  },
+  "repository": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE134_Uncontrolled_Format_String/s02/CWE134_Uncontrolled_Format_String__char_environment_vprintf_41.c"
+}

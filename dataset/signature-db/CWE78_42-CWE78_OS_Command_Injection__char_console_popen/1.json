@@ -1,0 +1,207 @@
+{
+  "bug_type": "API_MISUSE",
+  "qualifier": "CmdInjection.",
+  "severity": "ERROR",
+  "line": 78,
+  "column": 16,
+  "procedure": "CWE78_OS_Command_Injection__char_console_popen_42_bad",
+  "procedure_start_line": 69,
+  "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+  "bug_trace": [
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ],
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 53,
+        "column_number": 36,
+        "description": "prune, (n$10 == 10)",
+        "feature": "[\"Prune\",[\"BinOp\",\"==\",[\"Var\"],[\"Const\",[\"Cint\",\"10\"]]]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L53"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ],
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 53,
+        "column_number": 36,
+        "description": "prune, !(n$10 == 10)",
+        "feature": "[\"Prune\",[\"UnOp\",\"!\",[\"BinOp\",\"==\",[\"Var\"],[\"Const\",[\"Cint\",\"10\"]]]]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L53"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ],
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 52,
+        "column_number": 27,
+        "description": "library_call, strlen, n$15",
+        "feature": "[\"LibraryCall\",\"strlen\",\"n$15\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L52"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ],
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 52,
+        "column_number": 27,
+        "description": "library_call, strlen, n$15",
+        "feature": "[\"LibraryCall\",\"strlen\",\"n$15\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L52"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 53,
+        "column_number": 36,
+        "description": "prune, (n$10 == 10)",
+        "feature": "[\"Prune\",[\"BinOp\",\"==\",[\"Var\"],[\"Const\",[\"Cint\",\"10\"]]]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L53"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ],
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 48,
+        "column_number": 17,
+        "description": "input, fgets",
+        "feature": "[\"Input\",\"fgets\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L48"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 52,
+        "column_number": 27,
+        "description": "library_call, strlen, n$15",
+        "feature": "[\"LibraryCall\",\"strlen\",\"n$15\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L52"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 53,
+        "column_number": 36,
+        "description": "prune, !(n$10 == 10)",
+        "feature": "[\"Prune\",[\"UnOp\",\"!\",[\"BinOp\",\"==\",[\"Var\"],[\"Const\",[\"Cint\",\"10\"]]]]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L53"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+        "line_number": 78,
+        "column_number": 16,
+        "description": "cmd_injection, popen, n$5",
+        "feature": "[\"CmdInjection\",\"popen\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c#L78"
+      }
+    ]
+  ],
+  "key": "CWE78_OS_Command_Injection__char_console_popen_42.c|CWE78_OS_Command_Injection__char_console_popen_42_bad|API_MISUSE",
+  "hash": "f6a54cb55132d5848982ca38c6d17e6b",
+  "bug_type_hum": "Api Misuse",
+  "extras": {
+    "bug_src_loc": {
+      "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c",
+      "lnum": 48,
+      "cnum": 17,
+      "enum": 0
+    }
+  },
+  "repository": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE78_OS_Command_Injection/s02/CWE78_OS_Command_Injection__char_console_popen_42.c"
+}

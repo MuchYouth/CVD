@@ -99,18 +99,22 @@ def main() -> None:
     for query_offset, query in enumerate(selected):
         query_code = str(query["code"])
         query_tokens = count_tokens(tokenizer, query_code)
+        query_cve = normalize_cve(query.get("cve", ""))
         for rank, (distance, retrieved_index) in enumerate(
             zip(distances[query_offset], indices[query_offset]),
             start=1,
         ):
             example = retriever.metadata[int(retrieved_index)]
             example_code = str(example["code"])
+            retrieved_cve = example.get("cve", "")
+            retrieved_cve_normalized = normalize_cve(retrieved_cve)
             rows.append(
                 {
                     "query_sample_id": query.get("sample_id", args.start + query_offset),
                     "query_index": args.start + query_offset,
                     "query_label": query.get("label_text", ""),
                     "query_project": query.get("project", ""),
+                    "query_cve": query_cve,
                     "query_code_chars": len(query_code),
                     "query_code_lines": line_count(query_code),
                     "query_codebert_tokens": query_tokens,
@@ -123,6 +127,9 @@ def main() -> None:
                     "retrieved_label": example.get("label_text", ""),
                     "label_matches_query": example.get("label_text", "") == query.get("label_text", ""),
                     "retrieved_project": example.get("project", ""),
+                    "retrieved_cve": retrieved_cve,
+                    "retrieved_cve_normalized": retrieved_cve_normalized,
+                    "same_cve": cve_matches(query_cve, retrieved_cve_normalized),
                     "retrieved_dataset_type": example.get("dataset_type", ""),
                     "retrieved_source": example.get("source", ""),
                     "retrieved_code_chars": len(example_code),
@@ -165,6 +172,23 @@ def snippet(text: str, max_chars: int) -> str:
     if len(compact) <= max_chars:
         return compact
     return compact[: max(0, max_chars - 3)] + "..."
+
+
+def normalize_cve(value: Any) -> str:
+    text = str(value or "").strip()
+    return text if text else "UNKNOWN"
+
+
+def cve_values(value: str) -> set[str]:
+    if not value or value == "UNKNOWN":
+        return set()
+    return {part.strip() for part in value.split(";") if part.strip()}
+
+
+def cve_matches(query_cve: str, retrieved_cve: str) -> bool:
+    query_values = cve_values(query_cve)
+    retrieved_values = cve_values(retrieved_cve)
+    return bool(query_values & retrieved_values)
 
 
 def lexical_jaccard(left: str, right: str) -> float:

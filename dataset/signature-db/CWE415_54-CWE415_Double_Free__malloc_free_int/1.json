@@ -1,0 +1,81 @@
+{
+  "bug_type": "API_MISUSE",
+  "qualifier": "DoubleFree.",
+  "severity": "ERROR",
+  "line": 27,
+  "column": 5,
+  "procedure": "CWE415_Double_Free__malloc_free_int_54_bad",
+  "procedure_start_line": 27,
+  "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54e.c",
+  "bug_trace": [
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c",
+        "line_number": 32,
+        "column_number": 19,
+        "description": "allocate, malloc",
+        "feature": "[\"Allocate\",\"malloc\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c#L32"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c",
+        "line_number": 35,
+        "column_number": 5,
+        "description": "free, free, n$2",
+        "feature": "[\"Free\",\"free\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c#L35"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c",
+        "line_number": 36,
+        "column_number": 5,
+        "description": "call, CWE415_Double_Free__malloc_free_int_54b_badSink",
+        "feature": "[\"Call\",\"CWE415_Double_Free__malloc_free_int_54b_badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54a.c#L36"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54b.c",
+        "line_number": 29,
+        "column_number": 5,
+        "description": "call, CWE415_Double_Free__malloc_free_int_54c_badSink",
+        "feature": "[\"Call\",\"CWE415_Double_Free__malloc_free_int_54c_badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54b.c#L29"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54c.c",
+        "line_number": 29,
+        "column_number": 5,
+        "description": "call, CWE415_Double_Free__malloc_free_int_54d_badSink",
+        "feature": "[\"Call\",\"CWE415_Double_Free__malloc_free_int_54d_badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54c.c#L29"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54d.c",
+        "line_number": 29,
+        "column_number": 5,
+        "description": "call, CWE415_Double_Free__malloc_free_int_54e_badSink",
+        "feature": "[\"Call\",\"CWE415_Double_Free__malloc_free_int_54e_badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54d.c#L29"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54e.c",
+        "line_number": 27,
+        "column_number": 5,
+        "description": "free, free, n$0",
+        "feature": "[\"Free\",\"free\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54e.c#L27"
+      }
+    ]
+  ],
+  "key": "CWE415_Double_Free__malloc_free_int_54a.c|CWE415_Double_Free__malloc_free_int_54_bad|API_MISUSE",
+  "hash": "b663f1559397979bed596372f6566416",
+  "bug_type_hum": "Api Misuse",
+  "repository": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_int_54e.c"
+}

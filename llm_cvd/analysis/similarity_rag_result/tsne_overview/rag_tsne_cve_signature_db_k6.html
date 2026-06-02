@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RAG t-SNE CVE K6</title>
+<style>
+body { margin: 24px; font-family: Arial, sans-serif; color: #1f2933; }
+svg { border: 1px solid #d0d7de; background: #ffffff; }
+.legend { display: flex; gap: 18px; margin: 12px 0; align-items: center; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.bg { fill: #009e73; opacity: 0.55; }
+.retrieved { fill: #f59e0b; stroke: #7c2d12; stroke-width: 1; }
+.query { fill: #2563eb; stroke: #172554; stroke-width: 1.5; }
+text { font-size: 11px; }
+</style>
+</head>
+<body>
+<h1>t-SNE of CVE query embeddings and Signature DB retrieved examples</h1>
+<div class="legend">
+<span><span class="dot" style="background:#009e73"></span>Background Signature DB sample</span>
+<span><span class="dot" style="background:#f59e0b"></span>Unique retrieved Signature DB example</span>
+<span><span class="dot" style="background:#2563eb"></span>CVE query</span>
+</div>
+<svg width="1000" height="720" viewBox="0 0 1000 720">
+<circle class="bg" cx="533.75" cy="627.50" r="3"><title>background_juliet | trace-csv::63 | CWE134_02-CWE134_Uncontrolled_Format_String__char_console_printf | trace-csv::63 | Vulnerable</title></circle>
+<circle class="bg" cx="527.68" cy="558.41" r="3"><title>background_juliet | trace-csv::169 | CWE134_04-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::169 | Vulnerable</title></circle>
+<circle class="bg" cx="307.12" cy="106.18" r="3"><title>background_juliet | trace-csv::196 | CWE134_04-CWE134_Uncontrolled_Format_String__char_listen_socket_fprintf | trace-csv::196 | Vulnerable</title></circle>
+<circle class="bg" cx="533.75" cy="627.50" r="3"><title>background_juliet | trace-csv::264 | CWE134_06-CWE134_Uncontrolled_Format_String__char_console_printf | trace-csv::264 | Vulnerable</title></circle>
+<circle class="bg" cx="302.91" cy="119.39" r="3"><title>background_juliet | trace-csv::298 | CWE134_06-CWE134_Uncontrolled_Format_String__char_listen_socket_snprintf | trace-csv::298 | Vulnerable</title></circle>
+<circle class="bg" cx="527.68" cy="558.40" r="3"><title>background_juliet | trace-csv::319 | CWE134_07-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::319 | Vulnerable</title></circle>
+<circle class="bg" cx="489.35" cy="511.44" r="3"><title>background_juliet | trace-csv::361 | CWE134_08-CWE134_Uncontrolled_Format_String__char_console_fprintf | trace-csv::361 | Vulnerable</title></circle>
+<circle class="bg" cx="487.87" cy="499.45" r="3"><title>background_juliet | trace-csv::372 | CWE134_08-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::372 | Vulnerable</title></circle>
+<circle class="bg" cx="309.93" cy="147.69" r="3"><title>background_juliet | trace-csv::500 | CWE134_10-CWE134_Uncontrolled_Format_String__char_listen_socket_vprintf | trace-csv::500 | Vulnerable</title></circle>
+<circle class="bg" cx="465.19" cy="607.79" r="3"><title>background_juliet | trace-csv::540 | CWE134_11-CWE134_Uncontrolled_Format_String__char_environment_vprintf | trace-csv::540 | Vulnerable</title></circle>
+<circle class="bg" cx="511.45" cy="521.10" r="3"><title>background_juliet | trace-csv::576 | CWE134_12-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::576 | Vulnerable</title></circle>
+<circle class="bg" cx="306.33" cy="146.50" r="3"><title>background_juliet | trace-csv::649 | CWE134_13-CWE134_Uncontrolled_Format_String__char_listen_socket_vfprintf | trace-csv::649 | Vulnerable</title></circle>
+<circle class="bg" cx="521.30" cy="488.50" r="3"><title>background_juliet | trace-csv::677 | CWE134_14-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::677 | Vulnerable</title></circle>
+<circle class="bg" cx="485.57" cy="474.93" r="3"><title>background_juliet | trace-csv::685 | CWE134_14-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::685 | Vulnerable</title></circle>
+<circle class="bg" cx="515.25" cy="519.38" r="3"><title>background_juliet | trace-csv::725 | CWE134_15-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::725 | Vulnerable</title></circle>
+<circle class="bg" cx="516.62" cy="536.03" r="3"><title>background_juliet | trace-csv::732 | CWE134_15-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::732 | Vulnerable</title></circle>
+<circle class="bg" cx="318.17" cy="106.30" r="3"><title>background_juliet | trace-csv::752 | CWE134_16-CWE134_Uncontrolled_Format_String__char_connect_socket_printf | trace-csv::752 | Vulnerable</title></circle>
+<circle class="bg" cx="607.05" cy="574.87" r="3"><title>background_juliet | trace-csv::756 | CWE134_16-CWE134_Uncontrolled_Format_String__char_console_fprintf | trace-csv::756 | Vulnerable</title></circle>
+<circle class="bg" cx="583.79" cy="574.98" r="3"><title>background_juliet | trace-csv::774 | CWE134_16-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::774 | Vulnerable</title></circle>
+<circle class="bg" cx="511.45" cy="521.10" r="3"><title>background_juliet | trace-csv::775 | CWE134_16-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::775 | Vulnerable</title></circle>
+<circle class="bg" cx="484.98" cy="465.19" r="3"><title>background_juliet | trace-csv::779 | CWE134_16-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::779 | Vulnerable</title></circle>
+<circle class="bg" cx="586.74" cy="580.31" r="3"><title>background_juliet | trace-csv::795 | CWE134_16-CWE134_Uncontrolled_Format_String__char_file_vprintf | trace-csv::795 | Vulnerable</title></circle>
+<circle class="bg" cx="542.68" cy="509.25" r="3"><title>background_juliet | trace-csv::821 | CWE134_17-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::821 | Vulnerable</title></circle>
+<circle class="bg" cx="485.00" cy="465.17" r="3"><title>background_juliet | trace-csv::828 | CWE134_17-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::828 | Vulnerable</title></circle>
+<circle class="bg" cx="524.28" cy="493.91" r="3"><title>background_juliet | trace-csv::833 | CWE134_17-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::833 | Vulnerable</title></circle>
+<circle class="bg" cx="596.75" cy="559.46" r="3"><title>background_juliet | trace-csv::912 | CWE134_21-CWE134_Uncontrolled_Format_String__char_console_printf | trace-csv::912 | Vulnerable</title></circle>
+<circle class="bg" cx="447.48" cy="451.90" r="3"><title>background_juliet | trace-csv::979 | CWE134_22-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::979 | Vulnerable</title></circle>
+<circle class="bg" cx="602.52" cy="584.50" r="3"><title>background_juliet | trace-csv::1018 | CWE134_31-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::1018 | Vulnerable</title></circle>
+<circle class="bg" cx="513.49" cy="538.21" r="3"><title>background_juliet | trace-csv::1082 | CWE134_32-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::1082 | Vulnerable</title></circle>
+<circle class="bg" cx="486.42" cy="474.97" r="3"><title>background_juliet | trace-csv::1084 | CWE134_32-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::1084 | Vulnerable</title></circle>
+<circle class="bg" cx="303.59" cy="118.80" r="3"><title>background_juliet | trace-csv::1103 | CWE134_33-CWE134_Uncontrolled_Format_String__char_connect_socket_snprintf | trace-csv::1103 | Vulnerable</title></circle>
+<circle class="bg" cx="302.50" cy="140.68" r="3"><title>background_juliet | trace-csv::1104 | CWE134_33-CWE134_Uncontrolled_Format_String__char_connect_socket_vfprintf | trace-csv::1104 | Vulnerable</title></circle>
+<circle class="bg" cx="540.06" cy="504.82" r="3"><title>background_juliet | trace-csv::1191 | CWE134_41-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::1191 | Vulnerable</title></circle>
+<circle class="bg" cx="576.95" cy="557.68" r="3"><title>background_juliet | trace-csv::1194 | CWE134_41-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::1194 | Vulnerable</title></circle>
+<circle class="bg" cx="578.91" cy="559.68" r="3"><title>background_juliet | trace-csv::1215 | CWE134_41-CWE134_Uncontrolled_Format_String__char_file_vprintf | trace-csv::1215 | Vulnerable</title></circle>
+<circle class="bg" cx="458.59" cy="481.35" r="3"><title>background_juliet | trace-csv::1309 | CWE134_51-CWE134_Uncontrolled_Format_String__char_console_fprintf | trace-csv::1309 | Vulnerable</title></circle>
+<circle class="bg" cx="456.34" cy="460.96" r="3"><title>background_juliet | trace-csv::1311 | CWE134_51-CWE134_Uncontrolled_Format_String__char_console_fprintf | trace-csv::1311 | Vulnerable</title></circle>
+<circle class="bg" cx="453.68" cy="452.81" r="3"><title>background_juliet | trace-csv::1367 | CWE134_52-CWE134_Uncontrolled_Format_String__char_console_printf | trace-csv::1367 | Vulnerable</title></circle>
+<circle class="bg" cx="423.37" cy="419.58" r="3"><title>background_juliet | trace-csv::1387 | CWE134_52-CWE134_Uncontrolled_Format_String__char_environment_printf | trace-csv::1387 | Vulnerable</title></circle>
+<circle class="bg" cx="316.45" cy="196.99" r="3"><title>background_juliet | trace-csv::1399 | CWE134_52-CWE134_Uncontrolled_Format_String__char_listen_socket_vfprintf | trace-csv::1399 | Vulnerable</title></circle>
+<circle class="bg" cx="433.43" cy="455.88" r="3"><title>background_juliet | trace-csv::1431 | CWE134_53-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::1431 | Vulnerable</title></circle>
+<circle class="bg" cx="438.88" cy="441.68" r="3"><title>background_juliet | trace-csv::1435 | CWE134_53-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::1435 | Vulnerable</title></circle>
+<circle class="bg" cx="586.06" cy="555.74" r="3"><title>background_juliet | trace-csv::1530 | CWE134_61-CWE134_Uncontrolled_Format_String__char_console_vprintf | trace-csv::1530 | Vulnerable</title></circle>
+<circle class="bg" cx="612.10" cy="580.73" r="3"><title>background_juliet | trace-csv::1542 | CWE134_61-CWE134_Uncontrolled_Format_String__char_file_printf | trace-csv::1542 | Vulnerable</title></circle>
+<circle class="bg" cx="455.12" cy="458.90" r="3"><title>background_juliet | trace-csv::1610 | CWE134_64-CWE134_Uncontrolled_Format_String__char_console_fprintf | trace-csv::1610 | Vulnerable</title></circle>
+<circle class="bg" cx="319.83" cy="189.35" r="3"><title>background_juliet | trace-csv::1650 | CWE134_64-CWE134_Uncontrolled_Format_String__char_listen_socket_vprintf | trace-csv::1650 | Vulnerable</title></circle>
+<circle class="bg" cx="443.44" cy="493.35" r="3"><title>background_juliet | trace-csv::1699 | CWE134_66-CWE134_Uncontrolled_Format_String__char_console_snprintf | trace-csv::1699 | Vulnerable</title></circle>
+<circle class="bg" cx="426.57" cy="483.96" r="3"><title>background_juliet | trace-csv::1704 | CWE134_66-CWE134_Uncontrolled_Format_String__char_console_vfprintf | trace-csv::1704 | Vulnerable</title></circle>
+<circle class="bg" cx="579.26" cy="227.88" r="3"><title>background_juliet | trace-csv::1750 | CWE190_01-CWE190_Integer_Overflow__int_fgets_square | trace-csv::1750 | Vulnerable</title></circle>
+<circle class="bg" cx="512.78" cy="229.24" r="3"><title>background_juliet | trace-csv::1838 | CWE190_03-CWE190_Integer_Overflow__int_listen_socket_postinc | trace-csv::1838 | Vulnerable</title></circle>
+<circle class="bg" cx="711.47" cy="110.02" r="3"><title>background_juliet | trace-csv::1921 | CWE190_05-CWE190_Integer_Overflow__short_fscanf_add | trace-csv::1921 | Vulnerable</title></circle>
+<circle class="bg" cx="687.78" cy="96.89" r="3"><title>background_juliet | trace-csv::1929 | CWE190_05-CWE190_Integer_Overflow__unsigned_int_fscanf_preinc | trace-csv::1929 | Vulnerable</title></circle>
+<circle class="bg" cx="721.89" cy="79.97" r="3"><title>background_juliet | trace-csv::2005 | CWE190_07-CWE190_Integer_Overflow__short_fscanf_square | trace-csv::2005 | Vulnerable</title></circle>
+<circle class="bg" cx="711.47" cy="110.02" r="3"><title>background_juliet | trace-csv::2041 | CWE190_08-CWE190_Integer_Overflow__short_fscanf_add | trace-csv::2041 | Vulnerable</title></circle>
+<circle class="bg" cx="691.16" cy="154.31" r="3"><title>background_juliet | trace-csv::2056 | CWE190_09-CWE190_Integer_Overflow__int64_t_fscanf_add | trace-csv::2056 | Vulnerable</title></circle>
+<circle class="bg" cx="640.17" cy="194.19" r="3"><title>background_juliet | trace-csv::2097 | CWE190_10-CWE190_Integer_Overflow__int64_t_fscanf_multiply | trace-csv::2097 | Vulnerable</title></circle>
+<circle class="bg" cx="722.31" cy="55.71" r="3"><title>background_juliet | trace-csv::2255 | CWE190_13-CWE190_Integer_Overflow__char_fscanf_square | trace-csv::2255 | Vulnerable</title></circle>
+<circle class="bg" cx="724.16" cy="90.80" r="3"><title>background_juliet | trace-csv::2275 | CWE190_13-CWE190_Integer_Overflow__int_fscanf_square | trace-csv::2275 | Vulnerable</title></circle>
+<circle class="bg" cx="696.75" cy="63.55" r="3"><title>background_juliet | trace-csv::2294 | CWE190_14-CWE190_Integer_Overflow__char_fscanf_preinc | trace-csv::2294 | Vulnerable</title></circle>
+<circle class="bg" cx="524.01" cy="232.95" r="3"><title>background_juliet | trace-csv::2342 | CWE190_15-CWE190_Integer_Overflow__int_connect_socket_multiply | trace-csv::2342 | Vulnerable</title></circle>
+<circle class="bg" cx="632.51" cy="187.43" r="3"><title>background_juliet | trace-csv::2352 | CWE190_15-CWE190_Integer_Overflow__int_fscanf_multiply | trace-csv::2352 | Vulnerable</title></circle>
+<circle class="bg" cx="728.14" cy="97.84" r="3"><title>background_juliet | trace-csv::2365 | CWE190_15-CWE190_Integer_Overflow__short_fscanf_square | trace-csv::2365 | Vulnerable</title></circle>
+<circle class="bg" cx="694.28" cy="100.27" r="3"><title>background_juliet | trace-csv::2369 | CWE190_15-CWE190_Integer_Overflow__unsigned_int_fscanf_preinc | trace-csv::2369 | Vulnerable</title></circle>
+<circle class="bg" cx="712.04" cy="62.56" r="3"><title>background_juliet | trace-csv::2413 | CWE190_17-CWE190_Integer_Overflow__char_fscanf_postinc | trace-csv::2413 | Vulnerable</title></circle>
+<circle class="bg" cx="696.47" cy="157.24" r="3"><title>background_juliet | trace-csv::2456 | CWE190_18-CWE190_Integer_Overflow__int64_t_fscanf_add | trace-csv::2456 | Vulnerable</title></circle>
+<circle class="bg" cx="524.40" cy="213.56" r="3"><title>background_juliet | trace-csv::2518 | CWE190_21-CWE190_Integer_Overflow__int_listen_socket_postinc | trace-csv::2518 | Vulnerable</title></circle>
+<circle class="bg" cx="493.96" cy="256.45" r="3"><title>background_juliet | trace-csv::2597 | CWE190_31-CWE190_Integer_Overflow__int_listen_socket_multiply | trace-csv::2597 | Vulnerable</title></circle>
+<circle class="bg" cx="639.26" cy="102.49" r="3"><title>background_juliet | trace-csv::2601 | CWE190_31-CWE190_Integer_Overflow__short_fscanf_add | trace-csv::2601 | Vulnerable</title></circle>
+<circle class="bg" cx="632.69" cy="108.95" r="3"><title>background_juliet | trace-csv::2646 | CWE190_32-CWE190_Integer_Overflow__unsigned_int_fscanf_add | trace-csv::2646 | Vulnerable</title></circle>
+<circle class="bg" cx="496.51" cy="251.16" r="3"><title>background_juliet | trace-csv::2658 | CWE190_33-CWE190_Integer_Overflow__int_connect_socket_multiply | trace-csv::2658 | Vulnerable</title></circle>
+<circle class="bg" cx="647.74" cy="110.76" r="3"><title>background_juliet | trace-csv::2674 | CWE190_33-CWE190_Integer_Overflow__unsigned_int_fscanf_square | trace-csv::2674 | Vulnerable</title></circle>
+<circle class="bg" cx="643.03" cy="196.15" r="3"><title>background_juliet | trace-csv::2759 | CWE190_43-CWE190_Integer_Overflow__int64_t_fscanf_multiply | trace-csv::2759 | Vulnerable</title></circle>
+<circle class="bg" cx="579.26" cy="227.89" r="3"><title>background_juliet | trace-csv::2766 | CWE190_43-CWE190_Integer_Overflow__int_fgets_square | trace-csv::2766 | Vulnerable</title></circle>
+<circle class="bg" cx="496.02" cy="211.70" r="3"><title>background_juliet | trace-csv::2807 | CWE190_44-CWE190_Integer_Overflow__int_listen_socket_preinc | trace-csv::2807 | Vulnerable</title></circle>
+<circle class="bg" cx="444.21" cy="278.14" r="3"><title>background_juliet | trace-csv::2872 | CWE190_52-CWE190_Integer_Overflow__int_connect_socket_preinc | trace-csv::2872 | Vulnerable</title></circle>
+<circle class="bg" cx="403.46" cy="319.65" r="3"><title>background_juliet | trace-csv::2922 | CWE190_53-CWE190_Integer_Overflow__int_fscanf_preinc | trace-csv::2922 | Vulnerable</title></circle>
+<circle class="bg" cx="439.58" cy="276.54" r="3"><title>background_juliet | trace-csv::2953 | CWE190_54-CWE190_Integer_Overflow__int_connect_socket_square | trace-csv::2953 | Vulnerable</title></circle>
+<circle class="bg" cx="407.41" cy="316.45" r="3"><title>background_juliet | trace-csv::2975 | CWE190_54-CWE190_Integer_Overflow__unsigned_int_fscanf_multiply | trace-csv::2975 | Vulnerable</title></circle>
+<circle class="bg" cx="605.10" cy="119.17" r="3"><title>background_juliet | trace-csv::3002 | CWE190_61-CWE190_Integer_Overflow__int_fscanf_preinc | trace-csv::3002 | Vulnerable</title></circle>
+<circle class="bg" cx="399.28" cy="363.72" r="3"><title>background_juliet | trace-csv::3084 | CWE190_64-CWE190_Integer_Overflow__char_fscanf_multiply | trace-csv::3084 | Vulnerable</title></circle>
+<circle class="bg" cx="450.61" cy="277.34" r="3"><title>background_juliet | trace-csv::3111 | CWE190_64-CWE190_Integer_Overflow__int_listen_socket_preinc | trace-csv::3111 | Vulnerable</title></circle>
+<circle class="bg" cx="396.60" cy="345.20" r="3"><title>background_juliet | trace-csv::3118 | CWE190_64-CWE190_Integer_Overflow__unsigned_int_fscanf_add | trace-csv::3118 | Vulnerable</title></circle>
+<circle class="bg" cx="667.33" cy="158.15" r="3"><title>background_juliet | trace-csv::3131 | CWE190_65-CWE190_Integer_Overflow__int64_t_fscanf_preinc | trace-csv::3131 | Vulnerable</title></circle>
+<circle class="bg" cx="673.13" cy="129.92" r="3"><title>background_juliet | trace-csv::3145 | CWE190_65-CWE190_Integer_Overflow__int_fscanf_postinc | trace-csv::3145 | Vulnerable</title></circle>
+<circle class="bg" cx="669.69" cy="141.75" r="3"><title>background_juliet | trace-csv::3158 | CWE190_65-CWE190_Integer_Overflow__unsigned_int_fscanf_add | trace-csv::3158 | Vulnerable</title></circle>
+<circle class="bg" cx="515.16" cy="212.44" r="3"><title>background_juliet | trace-csv::3281 | CWE191_02-CWE191_Integer_Underflow__int_listen_socket_sub | trace-csv::3281 | Vulnerable</title></circle>
+<circle class="bg" cx="516.33" cy="210.01" r="3"><title>background_juliet | trace-csv::3300 | CWE191_03-CWE191_Integer_Underflow__int_connect_socket_sub | trace-csv::3300 | Vulnerable</title></circle>
+<circle class="bg" cx="700.77" cy="93.18" r="3"><title>background_juliet | trace-csv::3400 | CWE191_06-CWE191_Integer_Underflow__int_fscanf_predec | trace-csv::3400 | Vulnerable</title></circle>
+<circle class="bg" cx="563.56" cy="218.94" r="3"><title>background_juliet | trace-csv::3487 | CWE191_09-CWE191_Integer_Underflow__int_fgets_multiply | trace-csv::3487 | Vulnerable</title></circle>
+<circle class="bg" cx="575.05" cy="198.05" r="3"><title>background_juliet | trace-csv::3489 | CWE191_09-CWE191_Integer_Underflow__int_fgets_predec | trace-csv::3489 | Vulnerable</title></circle>
+<circle class="bg" cx="701.64" cy="79.57" r="3"><title>background_juliet | trace-csv::3500 | CWE191_09-CWE191_Integer_Underflow__short_fscanf_postdec | trace-csv::3500 | Vulnerable</title></circle>
+<circle class="bg" cx="690.45" cy="154.66" r="3"><title>background_juliet | trace-csv::3513 | CWE191_10-CWE191_Integer_Underflow__int64_t_fscanf_sub | trace-csv::3513 | Vulnerable</title></circle>
+<circle class="bg" cx="509.86" cy="245.10" r="3"><title>background_juliet | trace-csv::3589 | CWE191_12-CWE191_Integer_Underflow__int_connect_socket_predec | trace-csv::3589 | Vulnerable</title></circle>
+<circle class="bg" cx="679.16" cy="66.24" r="3"><title>background_juliet | trace-csv::3605 | CWE191_12-CWE191_Integer_Underflow__int_fscanf_predec | trace-csv::3605 | Vulnerable</title></circle>
+<circle class="bg" cx="718.89" cy="117.21" r="3"><title>background_juliet | trace-csv::3649 | CWE191_13-CWE191_Integer_Underflow__int_fscanf_sub | trace-csv::3649 | Vulnerable</title></circle>
+<circle class="bg" cx="693.65" cy="137.68" r="3"><title>background_juliet | trace-csv::3698 | CWE191_15-CWE191_Integer_Underflow__int64_t_fscanf_predec | trace-csv::3698 | Vulnerable</title></circle>
+<circle class="bg" cx="577.57" cy="228.16" r="3"><title>background_juliet | trace-csv::3705 | CWE191_15-CWE191_Integer_Underflow__int_fgets_postdec | trace-csv::3705 | Vulnerable</title></circle>
+<circle class="bg" cx="709.43" cy="80.91" r="3"><title>background_juliet | trace-csv::3718 | CWE191_15-CWE191_Integer_Underflow__short_fscanf_predec | trace-csv::3718 | Vulnerable</title></circle>
+<circle class="bg" cx="704.54" cy="48.00" r="3"><title>background_juliet | trace-csv::3725 | CWE191_16-CWE191_Integer_Underflow__char_fscanf_predec | trace-csv::3725 | Vulnerable</title></circle>
+<circle class="bg" cx="632.36" cy="183.16" r="3"><title>background_juliet | trace-csv::3739 | CWE191_16-CWE191_Integer_Underflow__int_fscanf_multiply | trace-csv::3739 | Vulnerable</title></circle>
+<circle class="bg" cx="719.62" cy="113.81" r="3"><title>background_juliet | trace-csv::3742 | CWE191_16-CWE191_Integer_Underflow__int_fscanf_sub | trace-csv::3742 | Vulnerable</title></circle>
+<circle class="bg" cx="701.64" cy="79.57" r="3"><title>background_juliet | trace-csv::3748 | CWE191_16-CWE191_Integer_Underflow__short_fscanf_postdec | trace-csv::3748 | Vulnerable</title></circle>
+<circle class="bg" cx="704.54" cy="48.00" r="3"><title>background_juliet | trace-csv::3756 | CWE191_17-CWE191_Integer_Underflow__char_fscanf_predec | trace-csv::3756 | Vulnerable</title></circle>
+<circle class="bg" cx="511.38" cy="229.23" r="3"><title>background_juliet | trace-csv::3775 | CWE191_17-CWE191_Integer_Underflow__int_listen_socket_postdec | trace-csv::3775 | Vulnerable</title></circle>
+<circle class="bg" cx="715.81" cy="88.13" r="3"><title>background_juliet | trace-csv::3802 | CWE191_18-CWE191_Integer_Underflow__int_fscanf_postdec | trace-csv::3802 | Vulnerable</title></circle>
+<circle class="bg" cx="511.61" cy="197.28" r="3"><title>background_juliet | trace-csv::3808 | CWE191_18-CWE191_Integer_Underflow__int_listen_socket_sub | trace-csv::3808 | Vulnerable</title></circle>
+<circle class="bg" cx="670.81" cy="104.98" r="3"><title>background_juliet | trace-csv::3841 | CWE191_21-CWE191_Integer_Underflow__short_fscanf_postdec | trace-csv::3841 | Vulnerable</title></circle>
+<circle class="bg" cx="405.49" cy="367.62" r="3"><title>background_juliet | trace-csv::3863 | CWE191_22-CWE191_Integer_Underflow__int_fscanf_multiply | trace-csv::3863 | Vulnerable</title></circle>
+<circle class="bg" cx="647.52" cy="94.14" r="3"><title>background_juliet | trace-csv::3881 | CWE191_31-CWE191_Integer_Underflow__char_fscanf_sub | trace-csv::3881 | Vulnerable</title></circle>
+<circle class="bg" cx="484.25" cy="259.64" r="3"><title>background_juliet | trace-csv::3917 | CWE191_32-CWE191_Integer_Underflow__int_connect_socket_multiply | trace-csv::3917 | Vulnerable</title></circle>
+<circle class="bg" cx="624.31" cy="122.87" r="3"><title>background_juliet | trace-csv::3933 | CWE191_32-CWE191_Integer_Underflow__short_fscanf_multiply | trace-csv::3933 | Vulnerable</title></circle>
+<circle class="bg" cx="631.65" cy="132.48" r="3"><title>background_juliet | trace-csv::3940 | CWE191_33-CWE191_Integer_Underflow__char_fscanf_multiply | trace-csv::3940 | Vulnerable</title></circle>
+<circle class="bg" cx="552.49" cy="222.09" r="3"><title>background_juliet | trace-csv::3946 | CWE191_33-CWE191_Integer_Underflow__int_fgets_multiply | trace-csv::3946 | Vulnerable</title></circle>
+<circle class="bg" cx="677.32" cy="90.74" r="3"><title>background_juliet | trace-csv::3956 | CWE191_41-CWE191_Integer_Underflow__char_fscanf_postdec | trace-csv::3956 | Vulnerable</title></circle>
+<circle class="bg" cx="635.54" cy="175.08" r="3"><title>background_juliet | trace-csv::3971 | CWE191_41-CWE191_Integer_Underflow__int_fscanf_multiply | trace-csv::3971 | Vulnerable</title></circle>
+<circle class="bg" cx="665.23" cy="94.33" r="3"><title>background_juliet | trace-csv::3987 | CWE191_42-CWE191_Integer_Underflow__char_fscanf_postdec | trace-csv::3987 | Vulnerable</title></circle>
+<circle class="bg" cx="499.75" cy="222.03" r="3"><title>background_juliet | trace-csv::4008 | CWE191_42-CWE191_Integer_Underflow__int_listen_socket_predec | trace-csv::4008 | Vulnerable</title></circle>
+<circle class="bg" cx="569.48" cy="219.76" r="3"><title>background_juliet | trace-csv::4023 | CWE191_43-CWE191_Integer_Underflow__int_fgets_multiply | trace-csv::4023 | Vulnerable</title></circle>
+<circle class="bg" cx="727.22" cy="118.88" r="3"><title>background_juliet | trace-csv::4026 | CWE191_43-CWE191_Integer_Underflow__int_fscanf_sub | trace-csv::4026 | Vulnerable</title></circle>
+<circle class="bg" cx="501.95" cy="199.80" r="3"><title>background_juliet | trace-csv::4043 | CWE191_44-CWE191_Integer_Underflow__int_connect_socket_sub | trace-csv::4043 | Vulnerable</title></circle>
+<circle class="bg" cx="641.59" cy="197.07" r="3"><title>background_juliet | trace-csv::4220 | CWE191_62-CWE191_Integer_Underflow__int64_t_fscanf_multiply | trace-csv::4220 | Vulnerable</title></circle>
+<circle class="bg" cx="569.48" cy="219.76" r="3"><title>background_juliet | trace-csv::4224 | CWE191_62-CWE191_Integer_Underflow__int_fgets_multiply | trace-csv::4224 | Vulnerable</title></circle>
+<circle class="bg" cx="394.66" cy="345.21" r="3"><title>background_juliet | trace-csv::4266 | CWE191_64-CWE191_Integer_Underflow__char_fscanf_predec | trace-csv::4266 | Vulnerable</title></circle>
+<circle class="bg" cx="390.67" cy="353.96" r="3"><title>background_juliet | trace-csv::4270 | CWE191_64-CWE191_Integer_Underflow__int64_t_fscanf_predec | trace-csv::4270 | Vulnerable</title></circle>
+<circle class="bg" cx="401.04" cy="364.61" r="3"><title>background_juliet | trace-csv::4280 | CWE191_64-CWE191_Integer_Underflow__int_fscanf_multiply | trace-csv::4280 | Vulnerable</title></circle>
+<circle class="bg" cx="576.79" cy="243.14" r="3"><title>background_juliet | trace-csv::4310 | CWE191_65-CWE191_Integer_Underflow__int_fgets_sub | trace-csv::4310 | Vulnerable</title></circle>
+<circle class="bg" cx="498.20" cy="208.72" r="3"><title>background_juliet | trace-csv::4316 | CWE191_65-CWE191_Integer_Underflow__int_listen_socket_postdec | trace-csv::4316 | Vulnerable</title></circle>
+<circle class="bg" cx="395.58" cy="327.20" r="3"><title>background_juliet | trace-csv::4331 | CWE191_66-CWE191_Integer_Underflow__int64_t_fscanf_postdec | trace-csv::4331 | Vulnerable</title></circle>
+<circle class="bg" cx="459.36" cy="266.96" r="3"><title>background_juliet | trace-csv::4334 | CWE191_66-CWE191_Integer_Underflow__int_connect_socket_multiply | trace-csv::4334 | Vulnerable</title></circle>
+<circle class="bg" cx="675.38" cy="572.13" r="3"><title>background_juliet | trace-csv::4440 | CWE415_03-CWE415_Double_Free__malloc_free_char | trace-csv::4440 | Vulnerable</title></circle>
+<circle class="bg" cx="935.08" cy="555.88" r="3"><title>background_juliet | trace-csv::4609 | CWE415_07-CWE415_Double_Free__new_delete_struct | trace-csv::4609 | Vulnerable</title></circle>
+<circle class="bg" cx="930.99" cy="498.90" r="3"><title>background_juliet | trace-csv::4634 | CWE415_08-CWE415_Double_Free__new_delete_class | trace-csv::4634 | Vulnerable</title></circle>
+<circle class="bg" cx="883.30" cy="608.58" r="3"><title>background_juliet | trace-csv::4690 | CWE415_10-CWE415_Double_Free__new_delete_array_class | trace-csv::4690 | Vulnerable</title></circle>
+<circle class="bg" cx="922.51" cy="597.90" r="3"><title>background_juliet | trace-csv::4731 | CWE415_11-CWE415_Double_Free__new_delete_array_long | trace-csv::4731 | Vulnerable</title></circle>
+<circle class="bg" cx="949.60" cy="579.62" r="3"><title>background_juliet | trace-csv::4735 | CWE415_11-CWE415_Double_Free__new_delete_char | trace-csv::4735 | Vulnerable</title></circle>
+<circle class="bg" cx="937.04" cy="506.72" r="3"><title>background_juliet | trace-csv::4742 | CWE415_11-CWE415_Double_Free__new_delete_long | trace-csv::4742 | Vulnerable</title></circle>
+<circle class="bg" cx="885.81" cy="607.57" r="3"><title>background_juliet | trace-csv::4779 | CWE415_13-CWE415_Double_Free__new_delete_array_int64_t | trace-csv::4779 | Vulnerable</title></circle>
+<circle class="bg" cx="937.61" cy="510.13" r="3"><title>background_juliet | trace-csv::4785 | CWE415_13-CWE415_Double_Free__new_delete_char | trace-csv::4785 | Vulnerable</title></circle>
+<circle class="bg" cx="673.73" cy="567.62" r="3"><title>background_juliet | trace-csv::4799 | CWE415_14-CWE415_Double_Free__malloc_free_int | trace-csv::4799 | Vulnerable</title></circle>
+<circle class="bg" cx="681.87" cy="576.65" r="3"><title>background_juliet | trace-csv::4832 | CWE415_15-CWE415_Double_Free__malloc_free_char | trace-csv::4832 | Vulnerable</title></circle>
+<circle class="bg" cx="670.51" cy="587.12" r="3"><title>background_juliet | trace-csv::4836 | CWE415_15-CWE415_Double_Free__malloc_free_int64_t | trace-csv::4836 | Vulnerable</title></circle>
+<circle class="bg" cx="943.17" cy="544.64" r="3"><title>background_juliet | trace-csv::4856 | CWE415_15-CWE415_Double_Free__new_delete_class | trace-csv::4856 | Vulnerable</title></circle>
+<circle class="bg" cx="890.70" cy="608.68" r="3"><title>background_juliet | trace-csv::4913 | CWE415_17-CWE415_Double_Free__new_delete_array_int | trace-csv::4913 | Vulnerable</title></circle>
+<circle class="bg" cx="909.70" cy="515.57" r="3"><title>background_juliet | trace-csv::5010 | CWE415_21-CWE415_Double_Free__new_delete_int64_t | trace-csv::5010 | Vulnerable</title></circle>
+<circle class="bg" cx="909.72" cy="515.57" r="3"><title>background_juliet | trace-csv::5061 | CWE415_22-CWE415_Double_Free__new_delete_int64_t | trace-csv::5061 | Vulnerable</title></circle>
+<circle class="bg" cx="952.00" cy="565.81" r="3"><title>background_juliet | trace-csv::5160 | CWE415_33-CWE415_Double_Free__new_delete_char | trace-csv::5160 | Vulnerable</title></circle>
+<circle class="bg" cx="921.67" cy="619.53" r="3"><title>background_juliet | trace-csv::5231 | CWE415_42-CWE415_Double_Free__new_delete_array_long | trace-csv::5231 | Vulnerable</title></circle>
+<circle class="bg" cx="657.57" cy="609.43" r="3"><title>background_juliet | trace-csv::5345 | CWE415_52-CWE415_Double_Free__malloc_free_long | trace-csv::5345 | Vulnerable</title></circle>
+<circle class="bg" cx="887.01" cy="544.00" r="3"><title>background_juliet | trace-csv::5357 | CWE415_52-CWE415_Double_Free__new_delete_array_class | trace-csv::5357 | Vulnerable</title></circle>
+<circle class="bg" cx="895.86" cy="546.83" r="3"><title>background_juliet | trace-csv::5426 | CWE415_53-CWE415_Double_Free__new_delete_array_char | trace-csv::5426 | Vulnerable</title></circle>
+<circle class="bg" cx="925.56" cy="619.77" r="3"><title>background_juliet | trace-csv::5428 | CWE415_53-CWE415_Double_Free__new_delete_array_char | trace-csv::5428 | Vulnerable</title></circle>
+<circle class="bg" cx="853.12" cy="510.89" r="3"><title>background_juliet | trace-csv::5429 | CWE415_53-CWE415_Double_Free__new_delete_array_class | trace-csv::5429 | Vulnerable</title></circle>
+<circle class="bg" cx="854.80" cy="509.47" r="3"><title>background_juliet | trace-csv::5434 | CWE415_53-CWE415_Double_Free__new_delete_array_int | trace-csv::5434 | Vulnerable</title></circle>
+<circle class="bg" cx="853.51" cy="509.45" r="3"><title>background_juliet | trace-csv::5439 | CWE415_53-CWE415_Double_Free__new_delete_array_int64_t | trace-csv::5439 | Vulnerable</title></circle>
+<circle class="bg" cx="853.33" cy="512.78" r="3"><title>background_juliet | trace-csv::5449 | CWE415_53-CWE415_Double_Free__new_delete_array_struct | trace-csv::5449 | Vulnerable</title></circle>
+<circle class="bg" cx="851.53" cy="492.68" r="3"><title>background_juliet | trace-csv::5515 | CWE415_54-CWE415_Double_Free__new_delete_array_char | trace-csv::5515 | Vulnerable</title></circle>
+<circle class="bg" cx="891.57" cy="602.58" r="3"><title>background_juliet | trace-csv::5592 | CWE415_61-CWE415_Double_Free__new_delete_array_int64_t | trace-csv::5592 | Vulnerable</title></circle>
+<circle class="bg" cx="893.22" cy="552.79" r="3"><title>background_juliet | trace-csv::5631 | CWE415_63-CWE415_Double_Free__new_delete_array_struct | trace-csv::5631 | Vulnerable</title></circle>
+<circle class="bg" cx="904.92" cy="509.32" r="3"><title>background_juliet | trace-csv::5671 | CWE415_64-CWE415_Double_Free__new_delete_int | trace-csv::5671 | Vulnerable</title></circle>
+<circle class="bg" cx="675.75" cy="591.13" r="3"><title>background_juliet | trace-csv::5678 | CWE415_65-CWE415_Double_Free__malloc_free_char | trace-csv::5678 | Vulnerable</title></circle>
+<circle class="bg" cx="888.28" cy="555.63" r="3"><title>background_juliet | trace-csv::5695 | CWE415_65-CWE415_Double_Free__new_delete_array_int64_t | trace-csv::5695 | Vulnerable</title></circle>
+<circle class="bg" cx="881.98" cy="489.79" r="3"><title>background_juliet | trace-csv::5702 | CWE415_65-CWE415_Double_Free__new_delete_class | trace-csv::5702 | Vulnerable</title></circle>
+<circle class="bg" cx="886.62" cy="500.60" r="3"><title>background_juliet | trace-csv::5711 | CWE415_65-CWE415_Double_Free__new_delete_struct | trace-csv::5711 | Vulnerable</title></circle>
+<circle class="bg" cx="912.18" cy="489.26" r="3"><title>background_juliet | trace-csv::5742 | CWE415_66-CWE415_Double_Free__new_delete_long | trace-csv::5742 | Vulnerable</title></circle>
+<circle class="bg" cx="915.06" cy="508.70" r="3"><title>background_juliet | trace-csv::5743 | CWE415_66-CWE415_Double_Free__new_delete_long | trace-csv::5743 | Vulnerable</title></circle>
+<circle class="bg" cx="912.78" cy="615.77" r="3"><title>background_juliet | trace-csv::5793 | CWE416_01-CWE416_Use_After_Free__new_delete_array_int64_t | trace-csv::5793 | Vulnerable</title></circle>
+<circle class="bg" cx="926.17" cy="605.21" r="3"><title>background_juliet | trace-csv::5815 | CWE416_02-CWE416_Use_After_Free__new_delete_array_char | trace-csv::5815 | Vulnerable</title></circle>
+<circle class="bg" cx="935.08" cy="555.88" r="3"><title>background_juliet | trace-csv::5833 | CWE416_02-CWE416_Use_After_Free__new_delete_struct | trace-csv::5833 | Vulnerable</title></circle>
+<circle class="bg" cx="946.88" cy="587.94" r="3"><title>background_juliet | trace-csv::5879 | CWE416_04-CWE416_Use_After_Free__new_delete_char | trace-csv::5879 | Vulnerable</title></circle>
+<circle class="bg" cx="661.27" cy="574.26" r="3"><title>background_juliet | trace-csv::5889 | CWE416_05-CWE416_Use_After_Free__malloc_free_int | trace-csv::5889 | Vulnerable</title></circle>
+<circle class="bg" cx="922.51" cy="597.90" r="3"><title>background_juliet | trace-csv::5930 | CWE416_06-CWE416_Use_After_Free__new_delete_array_long | trace-csv::5930 | Vulnerable</title></circle>
+<circle class="bg" cx="910.39" cy="595.64" r="3"><title>background_juliet | trace-csv::5958 | CWE416_07-CWE416_Use_After_Free__new_delete_array_struct | trace-csv::5958 | Vulnerable</title></circle>
+<circle class="bg" cx="942.83" cy="576.87" r="3"><title>background_juliet | trace-csv::5990 | CWE416_08-CWE416_Use_After_Free__new_delete_int | trace-csv::5990 | Vulnerable</title></circle>
+<circle class="bg" cx="937.62" cy="575.22" r="3"><title>background_juliet | trace-csv::5992 | CWE416_08-CWE416_Use_After_Free__new_delete_int64_t | trace-csv::5992 | Vulnerable</title></circle>
+<circle class="bg" cx="902.09" cy="502.13" r="3"><title>background_juliet | trace-csv::6016 | CWE416_09-CWE416_Use_After_Free__new_delete_int | trace-csv::6016 | Vulnerable</title></circle>
+<circle class="bg" cx="878.29" cy="573.49" r="3"><title>background_juliet | trace-csv::6035 | CWE416_10-CWE416_Use_After_Free__new_delete_array_int64_t | trace-csv::6035 | Vulnerable</title></circle>
+<circle class="bg" cx="658.62" cy="589.95" r="3"><title>background_juliet | trace-csv::6053 | CWE416_11-CWE416_Use_After_Free__malloc_free_int64_t | trace-csv::6053 | Vulnerable</title></circle>
+<circle class="bg" cx="670.51" cy="587.12" r="3"><title>background_juliet | trace-csv::6086 | CWE416_13-CWE416_Use_After_Free__malloc_free_int64_t | trace-csv::6086 | Vulnerable</title></circle>
+<circle class="bg" cx="658.62" cy="589.95" r="3"><title>background_juliet | trace-csv::6166 | CWE416_16-CWE416_Use_After_Free__malloc_free_int64_t | trace-csv::6166 | Vulnerable</title></circle>
+<circle class="bg" cx="935.08" cy="555.88" r="3"><title>background_juliet | trace-csv::6189 | CWE416_16-CWE416_Use_After_Free__new_delete_struct | trace-csv::6189 | Vulnerable</title></circle>
+<circle class="bg" cx="910.39" cy="595.67" r="3"><title>background_juliet | trace-csv::6206 | CWE416_17-CWE416_Use_After_Free__new_delete_array_struct | trace-csv::6206 | Vulnerable</title></circle>
+<circle class="bg" cx="943.17" cy="544.64" r="3"><title>background_juliet | trace-csv::6209 | CWE416_17-CWE416_Use_After_Free__new_delete_class | trace-csv::6209 | Vulnerable</title></circle>
+<circle class="bg" cx="881.08" cy="574.43" r="3"><title>background_juliet | trace-csv::6229 | CWE416_18-CWE416_Use_After_Free__new_delete_array_int64_t | trace-csv::6229 | Vulnerable</title></circle>
+<circle class="bg" cx="925.86" cy="563.11" r="3"><title>background_juliet | trace-csv::6240 | CWE416_18-CWE416_Use_After_Free__new_delete_int64_t | trace-csv::6240 | Vulnerable</title></circle>
+<circle class="bg" cx="482.23" cy="380.15" r="3"><title>background_juliet | trace-csv::6304 | CWE680_02-CWE680_Integer_Overflow_to_Buffer_Overflow__new_fgets | trace-csv::6304 | Vulnerable</title></circle>
+<circle class="bg" cx="464.26" cy="355.69" r="3"><title>background_juliet | trace-csv::6318 | CWE680_04-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_listen_socket | trace-csv::6318 | Vulnerable</title></circle>
+<circle class="bg" cx="636.35" cy="672.00" r="3"><title>background_juliet | trace-csv::6365 | CWE680_10-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fscanf | trace-csv::6365 | Vulnerable</title></circle>
+<circle class="bg" cx="482.23" cy="380.15" r="3"><title>background_juliet | trace-csv::6416 | CWE680_16-CWE680_Integer_Overflow_to_Buffer_Overflow__new_fgets | trace-csv::6416 | Vulnerable</title></circle>
+<circle class="bg" cx="636.35" cy="672.00" r="3"><title>background_juliet | trace-csv::6421 | CWE680_17-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fscanf | trace-csv::6421 | Vulnerable</title></circle>
+<circle class="bg" cx="464.50" cy="346.85" r="3"><title>background_juliet | trace-csv::6438 | CWE680_21-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_listen_socket | trace-csv::6438 | Vulnerable</title></circle>
+<circle class="retrieved" cx="380.39" cy="401.30" r="5"><title>retrieved_juliet | trace-csv::6475 | CWE680_41-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fscanf | trace-csv::6475 | Vulnerable</title></circle>
+<circle class="bg" cx="440.31" cy="288.22" r="3"><title>background_juliet | trace-csv::6521 | CWE680_53-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_connect_socket | trace-csv::6521 | Vulnerable</title></circle>
+<circle class="bg" cx="457.72" cy="295.51" r="3"><title>background_juliet | trace-csv::6536 | CWE680_54-CWE680_Integer_Overflow_to_Buffer_Overflow__new_listen_socket | trace-csv::6536 | Vulnerable</title></circle>
+<circle class="bg" cx="463.27" cy="312.82" r="3"><title>background_juliet | trace-csv::6541 | CWE680_61-CWE680_Integer_Overflow_to_Buffer_Overflow__new_connect_socket | trace-csv::6541 | Vulnerable</title></circle>
+<circle class="retrieved" cx="382.44" cy="391.09" r="5"><title>retrieved_juliet | trace-csv::6555 | CWE680_63-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fscanf | trace-csv::6555 | Vulnerable</title></circle>
+<circle class="retrieved" cx="380.90" cy="395.61" r="5"><title>retrieved_juliet | trace-csv::6563 | CWE680_64-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fscanf | trace-csv::6563 | Vulnerable</title></circle>
+<circle class="bg" cx="459.99" cy="305.32" r="3"><title>background_juliet | trace-csv::6568 | CWE680_64-CWE680_Integer_Overflow_to_Buffer_Overflow__new_listen_socket | trace-csv::6568 | Vulnerable</title></circle>
+<circle class="bg" cx="463.28" cy="355.21" r="3"><title>background_juliet | trace-csv::6569 | CWE680_65-CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_connect_socket | trace-csv::6569 | Vulnerable</title></circle>
+<circle class="bg" cx="603.80" cy="616.92" r="3"><title>background_juliet | trace-csv::6597 | CWE78_01-CWE78_OS_Command_Injection__char_console_execl | trace-csv::6597 | Vulnerable</title></circle>
+<circle class="bg" cx="521.74" cy="599.85" r="3"><title>background_juliet | trace-csv::6605 | CWE78_01-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::6605 | Vulnerable</title></circle>
+<circle class="bg" cx="316.89" cy="126.15" r="3"><title>background_juliet | trace-csv::6634 | CWE78_02-CWE78_OS_Command_Injection__char_connect_socket_execlp | trace-csv::6634 | Vulnerable</title></circle>
+<circle class="bg" cx="328.14" cy="99.19" r="3"><title>background_juliet | trace-csv::6636 | CWE78_02-CWE78_OS_Command_Injection__char_connect_socket_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="546.66" cy="601.90" r="3"><title>background_juliet | trace-csv::6658 | CWE78_02-CWE78_OS_Command_Injection__char_console_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="601.09" cy="623.55" r="3"><title>background_juliet | trace-csv::6665 | CWE78_02-CWE78_OS_Command_Injection__char_file_execl | trace-csv::6665 | Vulnerable</title></circle>
+<circle class="bg" cx="316.89" cy="126.15" r="3"><title>background_juliet | trace-csv::6714 | CWE78_04-CWE78_OS_Command_Injection__char_connect_socket_execlp | trace-csv::6714 | Vulnerable</title></circle>
+<circle class="bg" cx="513.15" cy="587.89" r="3"><title>background_juliet | trace-csv::6725 | CWE78_04-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::6725 | Vulnerable</title></circle>
+<circle class="bg" cx="521.14" cy="643.82" r="3"><title>background_juliet | trace-csv::6730 | CWE78_04-CWE78_OS_Command_Injection__char_console_popen | trace-csv::6730 | Vulnerable</title></circle>
+<circle class="bg" cx="543.46" cy="531.24" r="3"><title>background_juliet | trace-csv::6760 | CWE78_05-CWE78_OS_Command_Injection__char_console_execl | trace-csv::6760 | Vulnerable</title></circle>
+<circle class="bg" cx="603.80" cy="616.93" r="3"><title>background_juliet | trace-csv::6797 | CWE78_06-CWE78_OS_Command_Injection__char_console_execl | trace-csv::6797 | Vulnerable</title></circle>
+<circle class="bg" cx="511.59" cy="600.86" r="3"><title>background_juliet | trace-csv::6805 | CWE78_06-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::6805 | Vulnerable</title></circle>
+<circle class="bg" cx="538.47" cy="652.07" r="3"><title>background_juliet | trace-csv::6816 | CWE78_06-CWE78_OS_Command_Injection__char_console_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="601.34" cy="625.49" r="3"><title>background_juliet | trace-csv::6826 | CWE78_06-CWE78_OS_Command_Injection__char_file_execlp | trace-csv::6826 | Vulnerable</title></circle>
+<circle class="bg" cx="489.19" cy="532.63" r="3"><title>background_juliet | trace-csv::6854 | CWE78_07-CWE78_OS_Command_Injection__char_console_popen | trace-csv::6854 | Vulnerable</title></circle>
+<circle class="bg" cx="471.73" cy="617.68" r="3"><title>background_juliet | trace-csv::6864 | CWE78_07-CWE78_OS_Command_Injection__char_environment_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="332.59" cy="116.49" r="3"><title>background_juliet | trace-csv::6955 | CWE78_10-CWE78_OS_Command_Injection__char_connect_socket_popen | trace-csv::6955 | Vulnerable</title></circle>
+<circle class="bg" cx="322.55" cy="137.51" r="3"><title>background_juliet | trace-csv::6993 | CWE78_11-CWE78_OS_Command_Injection__char_connect_socket_execl | trace-csv::6993 | Vulnerable</title></circle>
+<circle class="bg" cx="603.80" cy="616.92" r="3"><title>background_juliet | trace-csv::6997 | CWE78_11-CWE78_OS_Command_Injection__char_console_execl | trace-csv::6997 | Vulnerable</title></circle>
+<circle class="bg" cx="517.32" cy="587.71" r="3"><title>background_juliet | trace-csv::7004 | CWE78_11-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7004 | Vulnerable</title></circle>
+<circle class="bg" cx="517.28" cy="587.69" r="3"><title>background_juliet | trace-csv::7045 | CWE78_12-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7045 | Vulnerable</title></circle>
+<circle class="bg" cx="511.60" cy="600.85" r="3"><title>background_juliet | trace-csv::7085 | CWE78_13-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7085 | Vulnerable</title></circle>
+<circle class="bg" cx="480.46" cy="524.76" r="3"><title>background_juliet | trace-csv::7087 | CWE78_13-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7087 | Vulnerable</title></circle>
+<circle class="bg" cx="521.14" cy="643.82" r="3"><title>background_juliet | trace-csv::7091 | CWE78_13-CWE78_OS_Command_Injection__char_console_popen | trace-csv::7091 | Vulnerable</title></circle>
+<circle class="bg" cx="492.29" cy="557.93" r="3"><title>background_juliet | trace-csv::7100 | CWE78_13-CWE78_OS_Command_Injection__char_console_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="520.29" cy="647.30" r="3"><title>background_juliet | trace-csv::7170 | CWE78_15-CWE78_OS_Command_Injection__char_console_popen | trace-csv::7170 | Vulnerable</title></circle>
+<circle class="bg" cx="508.21" cy="591.06" r="3"><title>background_juliet | trace-csv::7239 | CWE78_17-CWE78_OS_Command_Injection__char_console_execl | trace-csv::7239 | Vulnerable</title></circle>
+<circle class="bg" cx="468.82" cy="615.91" r="3"><title>background_juliet | trace-csv::7263 | CWE78_17-CWE78_OS_Command_Injection__char_environment_popen | trace-csv::7263 | Vulnerable</title></circle>
+<circle class="bg" cx="332.82" cy="125.51" r="3"><title>background_juliet | trace-csv::7311 | CWE78_18-CWE78_OS_Command_Injection__char_listen_socket_popen | trace-csv::7311 | Vulnerable</title></circle>
+<circle class="bg" cx="332.59" cy="116.54" r="3"><title>background_juliet | trace-csv::7315 | CWE78_21-CWE78_OS_Command_Injection__char_connect_socket_popen | trace-csv::7315 | Vulnerable</title></circle>
+<circle class="bg" cx="546.65" cy="601.90" r="3"><title>background_juliet | trace-csv::7338 | CWE78_21-CWE78_OS_Command_Injection__char_console_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="535.82" cy="656.14" r="3"><title>background_juliet | trace-csv::7416 | CWE78_31-CWE78_OS_Command_Injection__char_console_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="333.87" cy="125.67" r="3"><title>background_juliet | trace-csv::7511 | CWE78_33-CWE78_OS_Command_Injection__char_listen_socket_popen | trace-csv::7511 | Vulnerable</title></circle>
+<circle class="bg" cx="480.12" cy="528.01" r="3"><title>background_juliet | trace-csv::7567 | CWE78_42-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7567 | Vulnerable</title></circle>
+<circle class="bg" cx="448.17" cy="500.05" r="3"><title>background_juliet | trace-csv::7652 | CWE78_51-CWE78_OS_Command_Injection__char_console_popen | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="440.47" cy="490.46" r="3"><title>background_juliet | trace-csv::7690 | CWE78_52-CWE78_OS_Command_Injection__char_console_popen | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="313.88" cy="202.77" r="3"><title>background_juliet | trace-csv::7749 | CWE78_53-CWE78_OS_Command_Injection__char_listen_socket_execl | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="521.69" cy="599.93" r="3"><title>background_juliet | trace-csv::7803 | CWE78_61-CWE78_OS_Command_Injection__char_console_execlp | trace-csv::7803 | Vulnerable</title></circle>
+<circle class="bg" cx="585.88" cy="635.08" r="3"><title>background_juliet | trace-csv::7828 | CWE78_61-CWE78_OS_Command_Injection__char_file_system | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="316.87" cy="134.87" r="3"><title>background_juliet | trace-csv::7830 | CWE78_61-CWE78_OS_Command_Injection__char_listen_socket_execlp | trace-csv::7830 | Vulnerable</title></circle>
+<circle class="bg" cx="438.85" cy="500.05" r="3"><title>background_juliet | trace-csv::7838 | CWE78_63-CWE78_OS_Command_Injection__char_console_execl | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="323.42" cy="171.58" r="3"><title>background_juliet | trace-csv::7871 | CWE78_63-CWE78_OS_Command_Injection__char_listen_socket_popen | OS command injection | Vulnerable</title></circle>
+<circle class="bg" cx="241.33" cy="446.06" r="3"><title>background_juliet | trace-csv::7998 | autotrace-20200219.65 | trace-csv::7998 | Vulnerable</title></circle>
+<circle class="retrieved" cx="251.73" cy="434.33" r="5"><title>retrieved_juliet | trace-csv::8067 | autotrace-20200219.65 | trace-csv::8067 | Vulnerable</title></circle>
+<circle class="retrieved" cx="253.29" cy="441.24" r="5"><title>retrieved_juliet | trace-csv::8068 | autotrace-20200219.65 | trace-csv::8068 | Vulnerable</title></circle>
+<circle class="retrieved" cx="253.11" cy="432.72" r="5"><title>retrieved_juliet | trace-csv::8070 | autotrace-20200219.65 | trace-csv::8070 | Vulnerable</title></circle>
+<circle class="retrieved" cx="253.29" cy="441.24" r="5"><title>retrieved_juliet | trace-csv::8071 | autotrace-20200219.65 | trace-csv::8071 | Vulnerable</title></circle>
+<circle class="retrieved" cx="253.11" cy="432.68" r="5"><title>retrieved_juliet | trace-csv::8073 | autotrace-20200219.65 | trace-csv::8073 | Vulnerable</title></circle>
+<circle class="bg" cx="236.33" cy="443.72" r="3"><title>background_juliet | trace-csv::8078 | autotrace-20200219.65 | trace-csv::8078 | Vulnerable</title></circle>
+<circle class="retrieved" cx="124.55" cy="571.00" r="5"><title>retrieved_juliet | trace-csv::8108 | firejail-0.9.62 | trace-csv::8108 | Vulnerable</title></circle>
+<circle class="retrieved" cx="125.53" cy="571.52" r="5"><title>retrieved_juliet | trace-csv::8109 | firejail-0.9.62 | trace-csv::8109 | Vulnerable</title></circle>
+<circle class="retrieved" cx="124.55" cy="571.00" r="5"><title>retrieved_juliet | trace-csv::8110 | firejail-0.9.62 | trace-csv::8110 | Vulnerable</title></circle>
+<circle class="retrieved" cx="125.53" cy="571.52" r="5"><title>retrieved_juliet | trace-csv::8111 | firejail-0.9.62 | trace-csv::8111 | Vulnerable</title></circle>
+<circle class="bg" cx="274.96" cy="422.49" r="3"><title>background_juliet | trace-csv::8222 | sam2p-0.49.4 | trace-csv::8222 | Vulnerable</title></circle>
+<circle class="retrieved" cx="196.98" cy="485.14" r="5"><title>retrieved_juliet | trace-csv::8227 | sam2p-0.49.4 | trace-csv::8227 | Vulnerable</title></circle>
+<circle class="retrieved" cx="191.05" cy="500.21" r="5"><title>retrieved_juliet | trace-csv::8228 | sam2p-0.49.4 | trace-csv::8228 | Vulnerable</title></circle>
+<circle class="retrieved" cx="191.51" cy="474.87" r="5"><title>retrieved_juliet | trace-csv::8229 | sam2p-0.49.4 | trace-csv::8229 | Vulnerable</title></circle>
+<circle class="retrieved" cx="187.36" cy="516.49" r="5"><title>retrieved_juliet | trace-csv::8230 | sam2p-0.49.4 | trace-csv::8230 | Vulnerable</title></circle>
+<circle class="retrieved" cx="179.37" cy="494.89" r="5"><title>retrieved_juliet | trace-csv::8231 | sam2p-0.49.4 | trace-csv::8231 | Vulnerable</title></circle>
+<circle class="retrieved" cx="182.44" cy="478.92" r="5"><title>retrieved_juliet | trace-csv::8235 | sam2p-0.49.4 | trace-csv::8235 | Vulnerable</title></circle>
+<circle class="bg" cx="180.16" cy="507.78" r="3"><title>background_juliet | trace-csv::8237 | sam2p-0.49.4 | trace-csv::8237 | Vulnerable</title></circle>
+<circle class="bg" cx="263.78" cy="432.00" r="3"><title>background_juliet | trace-csv::8246 | sam2p-0.49.4 | trace-csv::8246 | Vulnerable</title></circle>
+<circle class="retrieved" cx="198.50" cy="492.81" r="5"><title>retrieved_juliet | trace-csv::8275 | sam2p-0.49.4 | trace-csv::8275 | Vulnerable</title></circle>
+<circle class="retrieved" cx="191.05" cy="500.21" r="5"><title>retrieved_juliet | trace-csv::8276 | sam2p-0.49.4 | trace-csv::8276 | Vulnerable</title></circle>
+<circle class="retrieved" cx="191.51" cy="474.87" r="5"><title>retrieved_juliet | trace-csv::8277 | sam2p-0.49.4 | trace-csv::8277 | Vulnerable</title></circle>
+<circle class="retrieved" cx="187.36" cy="516.49" r="5"><title>retrieved_juliet | trace-csv::8278 | sam2p-0.49.4 | trace-csv::8278 | Vulnerable</title></circle>
+<circle class="retrieved" cx="179.37" cy="494.89" r="5"><title>retrieved_juliet | trace-csv::8279 | sam2p-0.49.4 | trace-csv::8279 | Vulnerable</title></circle>
+<circle class="retrieved" cx="182.44" cy="478.92" r="5"><title>retrieved_juliet | trace-csv::8283 | sam2p-0.49.4 | trace-csv::8283 | Vulnerable</title></circle>
+<circle class="bg" cx="275.24" cy="422.32" r="3"><title>background_juliet | trace-csv::8293 | sam2p-0.49.4 | trace-csv::8293 | Vulnerable</title></circle>
+<circle class="bg" cx="197.21" cy="510.52" r="3"><title>background_juliet | trace-csv::8317 | sam2p-0.49.4 | trace-csv::8317 | Vulnerable</title></circle>
+<circle class="bg" cx="221.31" cy="466.36" r="3"><title>background_juliet | trace-csv::8388 | shntool-3.0.5 | trace-csv::8388 | Vulnerable</title></circle>
+<circle class="retrieved" cx="98.11" cy="543.24" r="5"><title>retrieved_juliet | trace-csv::8402 | urjtag-0.8 | trace-csv::8402 | Vulnerable</title></circle>
+<circle class="retrieved" cx="98.11" cy="543.24" r="5"><title>retrieved_juliet | trace-csv::8403 | urjtag-0.8 | trace-csv::8403 | Vulnerable</title></circle>
+<circle class="retrieved" cx="73.21" cy="515.20" r="5"><title>retrieved_juliet | trace-csv::8415 | urjtag-0.8 | trace-csv::8415 | Vulnerable</title></circle>
+<circle class="retrieved" cx="87.43" cy="509.84" r="5"><title>retrieved_juliet | trace-csv::8416 | urjtag-0.8 | trace-csv::8416 | Vulnerable</title></circle>
+<circle class="retrieved" cx="83.05" cy="536.04" r="5"><title>retrieved_juliet | trace-csv::8422 | urjtag-0.8 | trace-csv::8422 | Vulnerable</title></circle>
+<circle class="retrieved" cx="68.74" cy="526.64" r="5"><title>retrieved_juliet | trace-csv::8424 | urjtag-0.8 | trace-csv::8424 | Vulnerable</title></circle>
+<circle class="bg" cx="96.18" cy="562.92" r="3"><title>background_juliet | trace-csv::8445 | urjtag-0.8 | trace-csv::8445 | Vulnerable</title></circle>
+<circle class="retrieved" cx="75.27" cy="530.56" r="5"><title>retrieved_juliet | trace-csv::8463 | urjtag-0.8 | trace-csv::8463 | Vulnerable</title></circle>
+<circle class="retrieved" cx="96.41" cy="520.37" r="5"><title>retrieved_juliet | trace-csv::8464 | urjtag-0.8 | trace-csv::8464 | Vulnerable</title></circle>
+<circle class="retrieved" cx="87.45" cy="539.84" r="5"><title>retrieved_juliet | trace-csv::8470 | urjtag-0.8 | trace-csv::8470 | Vulnerable</title></circle>
+<circle class="retrieved" cx="77.07" cy="512.77" r="5"><title>retrieved_juliet | trace-csv::8472 | urjtag-0.8 | trace-csv::8472 | Vulnerable</title></circle>
+<circle class="retrieved" cx="78.21" cy="562.70" r="5"><title>retrieved_juliet | trace-csv::8518 | urjtag-0.8 | trace-csv::8518 | Vulnerable</title></circle>
+<circle class="bg" cx="89.67" cy="575.47" r="3"><title>background_juliet | trace-csv::8539 | urjtag-0.8 | trace-csv::8539 | Vulnerable</title></circle>
+<circle class="retrieved" cx="68.36" cy="549.51" r="5"><title>retrieved_juliet | trace-csv::8559 | urjtag-0.8 | trace-csv::8559 | Vulnerable</title></circle>
+<circle class="retrieved" cx="86.08" cy="515.76" r="5"><title>retrieved_juliet | trace-csv::8560 | urjtag-0.8 | trace-csv::8560 | Vulnerable</title></circle>
+<circle class="retrieved" cx="79.49" cy="550.31" r="5"><title>retrieved_juliet | trace-csv::8566 | urjtag-0.8 | trace-csv::8566 | Vulnerable</title></circle>
+<circle class="retrieved" cx="68.89" cy="541.10" r="5"><title>retrieved_juliet | trace-csv::8568 | urjtag-0.8 | trace-csv::8568 | Vulnerable</title></circle>
+<circle class="bg" cx="91.28" cy="564.17" r="3"><title>background_juliet | trace-csv::8588 | urjtag-0.8 | trace-csv::8588 | Vulnerable</title></circle>
+<circle class="retrieved" cx="92.86" cy="522.46" r="5"><title>retrieved_juliet | trace-csv::8608 | urjtag-0.8 | trace-csv::8608 | Vulnerable</title></circle>
+<circle class="retrieved" cx="85.26" cy="548.90" r="5"><title>retrieved_juliet | trace-csv::8614 | urjtag-0.8 | trace-csv::8614 | Vulnerable</title></circle>
+<circle class="retrieved" cx="74.12" cy="566.40" r="5"><title>retrieved_juliet | trace-csv::8662 | urjtag-0.8 | trace-csv::8662 | Vulnerable</title></circle>
+<circle class="bg" cx="82.73" cy="577.41" r="3"><title>background_juliet | trace-csv::8670 | urjtag-0.8 | trace-csv::8670 | Vulnerable</title></circle>
+<circle class="bg" cx="48.00" cy="533.94" r="3"><title>background_juliet | trace-csv::8698 | zsh-5.4.2 | trace-csv::8698 | Vulnerable</title></circle>
+<circle class="query" cx="90.16" cy="436.22" r="7"><title>query_cve | 1 | patch__CVE-2019-13638 | Vulnerable</title></circle>
+<text x="98.16" y="440.22">Q1</text>
+<circle class="query" cx="90.33" cy="435.33" r="7"><title>query_cve | 2 | patch__CVE-2019-13638 | Safe</title></circle>
+<text x="98.33" y="439.33">Q2</text>
+<circle class="query" cx="86.03" cy="346.49" r="7"><title>query_cve | 3 | php-src__CVE-2015-8617 | Vulnerable</title></circle>
+<text x="94.03" y="350.49">Q3</text>
+<circle class="query" cx="86.06" cy="347.00" r="7"><title>query_cve | 4 | php-src__CVE-2015-8617 | Safe</title></circle>
+<text x="94.06" y="351.00">Q4</text>
+<circle class="query" cx="92.73" cy="396.07" r="7"><title>query_cve | 5 | spice-vdagent__CVE-2017-15108 | Vulnerable</title></circle>
+<text x="100.73" y="400.07">Q5</text>
+<circle class="query" cx="94.23" cy="397.02" r="7"><title>query_cve | 6 | spice-vdagent__CVE-2017-15108 | Safe</title></circle>
+<text x="102.23" y="401.02">Q6</text>
+<circle class="query" cx="104.83" cy="392.34" r="7"><title>query_cve | 7 | php-src__CVE-2015-8617 | Vulnerable</title></circle>
+<text x="112.83" y="396.34">Q7</text>
+<circle class="query" cx="105.52" cy="395.33" r="7"><title>query_cve | 8 | php-src__CVE-2015-8617 | Safe</title></circle>
+<text x="113.52" y="399.33">Q8</text>
+<circle class="query" cx="114.08" cy="426.08" r="7"><title>query_cve | 9 | rsyslog__CVE-2017-12588 | Vulnerable</title></circle>
+<text x="122.08" y="430.08">Q9</text>
+<circle class="query" cx="114.21" cy="426.31" r="7"><title>query_cve | 10 | rsyslog__CVE-2017-12588 | Safe</title></circle>
+<text x="122.21" y="430.31">Q10</text>
+<circle class="query" cx="56.91" cy="441.45" r="7"><title>query_cve | 11 | plasma-workspace__CVE-2018-6791 | Vulnerable</title></circle>
+<text x="64.91" y="445.45">Q11</text>
+<circle class="query" cx="56.99" cy="441.38" r="7"><title>query_cve | 12 | plasma-workspace__CVE-2018-6791 | Safe</title></circle>
+<text x="64.99" y="445.38">Q12</text>
+<circle class="query" cx="72.20" cy="399.79" r="7"><title>query_cve | 13 | shadowsocks-libev__CVE-2017-15924 | Vulnerable</title></circle>
+<text x="80.20" y="403.79">Q13</text>
+<circle class="query" cx="71.02" cy="393.35" r="7"><title>query_cve | 14 | shadowsocks-libev__CVE-2017-15924 | Safe</title></circle>
+<text x="79.02" y="397.35">Q14</text>
+<circle class="query" cx="139.99" cy="418.32" r="7"><title>query_cve | 15 | openjpeg__CVE-2019-12973 | Vulnerable</title></circle>
+<text x="147.99" y="422.32">Q15</text>
+<circle class="query" cx="124.28" cy="425.56" r="7"><title>query_cve | 16 | openjpeg__CVE-2019-12973 | Safe</title></circle>
+<text x="132.28" y="429.56">Q16</text>
+<circle class="query" cx="134.83" cy="446.88" r="7"><title>query_cve | 17 | radare2__CVE-2019-16718 | Vulnerable</title></circle>
+<text x="142.83" y="450.88">Q17</text>
+<circle class="query" cx="78.07" cy="427.07" r="7"><title>query_cve | 18 | radare2__CVE-2019-16718 | Safe</title></circle>
+<text x="86.07" y="431.07">Q18</text>
+<circle class="query" cx="133.09" cy="437.01" r="7"><title>query_cve | 19 | ghostpdl__CVE-2018-16863 | Vulnerable</title></circle>
+<text x="141.09" y="441.01">Q19</text>
+<circle class="query" cx="130.70" cy="427.74" r="7"><title>query_cve | 20 | ghostpdl__CVE-2018-16863 | Safe</title></circle>
+<text x="138.70" y="431.74">Q20</text>
+</svg>
+</body>
+</html>

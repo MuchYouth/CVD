@@ -1,0 +1,45 @@
+{
+  "bug_type": "API_MISUSE",
+  "qualifier": "UseAfterFree.",
+  "severity": "ERROR",
+  "line": 27,
+  "column": 5,
+  "procedure": "CWE415_Double_Free__malloc_free_char_44_bad",
+  "procedure_start_line": 30,
+  "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c",
+  "bug_trace": [
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c",
+        "line_number": 37,
+        "column_number": 20,
+        "description": "allocate, malloc",
+        "feature": "[\"Allocate\",\"malloc\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c#L37"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c",
+        "line_number": 40,
+        "column_number": 5,
+        "description": "free, free, n$3",
+        "feature": "[\"Free\",\"free\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c#L40"
+      },
+      {
+        "level": 1,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c",
+        "line_number": 42,
+        "column_number": 5,
+        "description": "call, badSink",
+        "feature": "[\"Call\",\"badSink\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c#L42"
+      }
+    ]
+  ],
+  "key": "CWE415_Double_Free__malloc_free_char_44.c|CWE415_Double_Free__malloc_free_char_44_bad|API_MISUSE",
+  "hash": "bc4b183c678840a3a84d34f66cc6fb9c",
+  "bug_type_hum": "Api Misuse",
+  "repository": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE415_Double_Free/s01/CWE415_Double_Free__malloc_free_char_44.c"
+}

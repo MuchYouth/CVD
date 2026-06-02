@@ -1,0 +1,186 @@
+query_sample_id,query_index,query_csv_data_row_number,query_csv_file_line_number,query_label,query_project,query_file_name,query_unique_id,query_target,query_vulnerable_line_numbers,query_dataset_type,query_source_csv,target_trace,rank,faiss_l2_distance,cosine_similarity,lexical_jaccard,retrieved_index,retrieved_sample_id,retrieved_csv_data_row_number,retrieved_csv_file_line_number,retrieved_label,label_matches_query,retrieved_project,retrieved_file_name,retrieved_unique_id,retrieved_target,retrieved_vulnerable_line_numbers,retrieved_dataset_type,retrieved_source_csv,retrieved_source_signature_path,retrieved_trace
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",1,5.58526611328125,0.993924,0.05063291139240506,8415,trace-csv::8416,8416,8417,Vulnerable,True,urjtag-0.8,urjtag-0.8/1.json#trace17,8416,1,"39,57,67,68,70,136,141,168,169,187,193,203,209,211,219,248,253,257,300,310,341",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/1.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+  char	*nextcmd = line;
+  line = nextcmd;
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, min );"
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",2,5.60089111328125,0.993906,0.05063291139240506,8463,trace-csv::8464,8464,8465,Vulnerable,True,urjtag-0.8,urjtag-0.8/2.json#trace17,8464,1,"39,57,67,68,70,136,141,168,169,187,193,203,209,211,219,248,253,257,300,310,346",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/2.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+  char	*nextcmd = line;
+  line = nextcmd;
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, max );"
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",3,5.60211181640625,0.993901,0.05063291139240506,8471,trace-csv::8472,8472,8473,Vulnerable,True,urjtag-0.8,urjtag-0.8/2.json#trace25,8472,1,"39,57,67,68,70,136,141,168,169,187,193,211,219,248,253,257,300,310,346",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/2.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, max );"
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",4,5.602294921875,0.993901,0.05063291139240506,8462,trace-csv::8463,8463,8464,Vulnerable,True,urjtag-0.8,urjtag-0.8/2.json#trace16,8463,1,"39,57,67,68,70,136,141,168,169,187,193,211,219,248,253,257,300,310,346",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/2.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, max );"
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",5,5.6055908203125,0.993897,0.05,8421,trace-csv::8422,8422,8423,Vulnerable,True,urjtag-0.8,urjtag-0.8/1.json#trace23,8422,1,"39,57,67,68,70,136,141,165,168,169,187,193,211,219,248,253,257,300,310,341",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/1.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+	if (!line || !(strlen( line ) > 0))
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, min );"
+1,0,1,2,Vulnerable,patch__CVE-2019-13638,1,1,1,1,test,dataset/cve_Real_Vul_data.csv,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+",6,5.6092529296875,0.993893,0.05063291139240506,8423,trace-csv::8424,8424,8425,Vulnerable,True,urjtag-0.8,urjtag-0.8/1.json#trace25,8424,1,"39,57,67,68,70,136,141,168,169,187,193,211,219,248,253,257,300,310,341",test,dataset/signature_db_Vul_data.csv,tracer-signaturedb-rag/signature-db-ori/urjtag-0.8/1.json,"	while(fgets(line, 1023, stdin));
+		jtag_readline_multiple_commands_support( line );
+  nextcmd = strstr(nextcmd, ""::""); /* :: to not confuse ms-dos users ;-) */
+  r = jtag_parse_line( line );
+	t = get_token( line );
+	char *t = strtok( buf, "" \f\n\r\t\v"" );
+	if (t && (*t == '#'))
+	return t;
+	if (!t)
+		a[n++] = t;
+	r = cmd_run( a );
+	if (!params[0])
+			int r = cmds[i]->run( params );
+	if (cmd_params( params ) < 2)
+			bus_t *bus = bus_drivers[i]->new_bus( params );
+		prototype_bus_signal_parse( value, fmt, &inst );
+			sprintf( fmt, ""%s%s"", pre, ""%d"" );
+			strcpy( afmt, fmt );
+				sprintf( buff, afmt, min );"

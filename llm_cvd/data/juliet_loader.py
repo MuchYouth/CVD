@@ -70,6 +70,7 @@ def load_real_vul_records(path: str | Path) -> list[dict[str, Any]]:
                 "label_text": "Vulnerable" if target == "1" else "Safe",
                 "db_name": "real-vul",
                 "project": record.get("project", ""),
+                "cve": record.get("cve", ""),
                 "source": str(csv_path),
             }
         )
@@ -110,6 +111,8 @@ def parse_real_vul_csv(text: str) -> list[dict[str, str]]:
     for index, line in enumerate(lines[1:], start=1):
         if re.match(r"^\d+,\d+,[01],", line):
             starts.append(index)
+    if not starts:
+        return parse_standard_real_vul_csv(text)
     starts.append(len(lines))
 
     records = []
@@ -267,17 +270,18 @@ def load_juliet_csv_train_records(path: Path) -> list[dict[str, Any]]:
         unique_id = record.get("unique_id") or len(rows)
         rows.append(
             {
-                "sample_id": f"juliet-csv::{unique_id}",
+                "sample_id": f"trace-csv::{unique_id}",
                 "code": code,
                 "label": int(target),
                 "label_text": "Vulnerable" if target == "1" else "Safe",
-                "db_name": "juliet",
+                "db_name": "trace-csv",
                 "project": record.get("project", ""),
+                "cve": record.get("cve", ""),
                 "dataset_type": record.get("dataset_type", ""),
                 "source": str(path),
             }
         )
-    log_loader(f"Loaded {len(rows)} Juliet CSV train records")
+    log_loader(f"Loaded {len(rows)} trace CSV train records")
     return rows
 
 

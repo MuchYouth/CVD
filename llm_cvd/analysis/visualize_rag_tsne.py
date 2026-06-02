@@ -27,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--embedding-model-name", default="microsoft/codebert-base")
     parser.add_argument("--device", default=None)
     parser.add_argument("--background-sample", type=int, default=250)
+    parser.add_argument("--corpus-label", default="Juliet")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--perplexity", type=float, default=30.0)
     parser.add_argument("--output-csv", default="results/rag_tsne_cve_k6_points.csv")
@@ -105,8 +106,8 @@ def main() -> None:
         row["y"] = f"{coord[1]:.6f}"
 
     write_points_csv(Path(args.output_csv), labels)
-    write_points_html(Path(args.output_html), labels)
-    write_points_png(Path(args.output_png), labels)
+    write_points_html(Path(args.output_html), labels, args.corpus_label)
+    write_points_png(Path(args.output_png), labels, args.corpus_label)
     print(f"Wrote t-SNE point CSV: {args.output_csv}")
     print(f"Wrote t-SNE HTML: {args.output_html}")
     print(f"Wrote t-SNE PNG: {args.output_png}")
@@ -172,7 +173,7 @@ def write_points_csv(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
-def write_points_html(path: Path, rows: list[dict[str, str]]) -> None:
+def write_points_html(path: Path, rows: list[dict[str, str]], corpus_label: str) -> None:
     width = 1000
     height = 720
     pad = 48
@@ -211,10 +212,10 @@ text {{ font-size: 11px; }}
 </style>
 </head>
 <body>
-<h1>t-SNE of CVE query embeddings and Juliet retrieved examples</h1>
+<h1>t-SNE of CVE query embeddings and {html.escape(corpus_label)} retrieved examples</h1>
 <div class="legend">
-<span><span class="dot" style="background:#009e73"></span>Background Juliet sample</span>
-<span><span class="dot" style="background:#f59e0b"></span>Unique retrieved Juliet example</span>
+<span><span class="dot" style="background:#009e73"></span>Background {html.escape(corpus_label)} sample</span>
+<span><span class="dot" style="background:#f59e0b"></span>Unique retrieved {html.escape(corpus_label)} example</span>
 <span><span class="dot" style="background:#2563eb"></span>CVE query</span>
 </div>
 <svg width="{width}" height="{height}" viewBox="0 0 {width} {height}">
@@ -241,19 +242,19 @@ text {{ font-size: 11px; }}
         handle.write("</svg>\n</body>\n</html>\n")
 
 
-def write_points_png(path: Path, rows: list[dict[str, str]]) -> None:
+def write_points_png(path: Path, rows: list[dict[str, str]], corpus_label: str) -> None:
     import matplotlib.pyplot as plt
 
     groups = {
         "background_juliet": {
-            "label": "Background Juliet sample",
+            "label": f"Background {corpus_label} sample",
             "color": "#009e73",
             "size": 18,
             "alpha": 0.55,
             "marker": "o",
         },
         "retrieved_juliet": {
-            "label": "Unique retrieved Juliet example",
+            "label": f"Unique retrieved {corpus_label} example",
             "color": "#f59e0b",
             "size": 45,
             "alpha": 0.9,
@@ -292,7 +293,7 @@ def write_points_png(path: Path, rows: list[dict[str, str]]) -> None:
                 textcoords="offset points",
                 fontsize=7,
             )
-    ax.set_title("t-SNE of CVE query embeddings and retrieved Juliet examples")
+    ax.set_title(f"t-SNE of CVE query embeddings and retrieved {corpus_label} examples")
     ax.set_xlabel("t-SNE dimension 1")
     ax.set_ylabel("t-SNE dimension 2")
     ax.legend(frameon=False, loc="best")

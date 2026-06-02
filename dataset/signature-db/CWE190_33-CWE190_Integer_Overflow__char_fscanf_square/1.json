@@ -1,0 +1,62 @@
+{
+  "bug_type": "API_MISUSE",
+  "qualifier": "IntOverflow.",
+  "severity": "ERROR",
+  "line": 39,
+  "column": 13,
+  "procedure": "CWE190_Integer_Overflow__char_fscanf_square_33::bad",
+  "procedure_start_line": 27,
+  "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+  "bug_trace": [
+    [
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+        "line_number": 33,
+        "column_number": 5,
+        "description": "input, fscanf",
+        "feature": "[\"Input\",\"fscanf\"]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp#L33"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+        "line_number": 35,
+        "column_number": 9,
+        "description": "store, &data, n$5",
+        "feature": "[\"Store\",[\"Var\"],[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp#L35"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+        "line_number": 38,
+        "column_number": 13,
+        "description": "store, &result, (n$2 * n$3)",
+        "feature": "[\"Store\",[\"Var\"],[\"BinOp\",\"*\",[\"Var\"],[\"Var\"]]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp#L38"
+      },
+      {
+        "level": 0,
+        "filename": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+        "line_number": 39,
+        "column_number": 13,
+        "description": "int_overflow, printHexCharLine, n$0",
+        "feature": "[\"IntOverflow\",\"printHexCharLine\",[\"Var\"]]",
+        "code": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp#L39"
+      }
+    ]
+  ],
+  "key": "CWE190_Integer_Overflow__char_fscanf_square_33.cpp|CWE190_Integer_Overflow__char_fscanf_square_33::bad|API_MISUSE",
+  "hash": "e224c88c97c862834fff47ad6fa68b17",
+  "bug_type_hum": "Api Misuse",
+  "extras": {
+    "bug_src_loc": {
+      "file": "/home/wooseok/workspace/infer-experiment/juliet-test-suite-c/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp",
+      "lnum": 33,
+      "cnum": 5,
+      "enum": 0
+    }
+  },
+  "repository": "https://github.com/arichardson/juliet-test-suite-c/blob/master/testcases/CWE190_Integer_Overflow/s01/CWE190_Integer_Overflow__char_fscanf_square_33.cpp"
+}

@@ -4,7 +4,8 @@ __pycache__/
 cache/
 indexes/
 results/
-dataset/
+dataset/*.csv
 .codex
 .env
 juliet-playground/
+sim_web/
