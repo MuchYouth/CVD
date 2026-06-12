@@ -9,3 +9,5 @@ dataset/*.csv
 .env
 juliet-playground/
 sim_web/
+tracer/
+top50/
