@@ -37,6 +37,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retrieval-batch-size", type=int, default=16)
     parser.add_argument("--snippet-chars", type=int, default=220)
     parser.add_argument(
+        "--include-full-traces",
+        "--include-full-code",
+        action="store_true",
+        help="Include full query/retrieved processed traces as query_full_trace and retrieved_full_trace.",
+    )
+    parser.add_argument(
         "--output-csv",
         default="results/rag_retrieval_inspection.csv",
         help="CSV path for the flattened query/retrieved-example report.",
@@ -108,38 +114,44 @@ def main() -> None:
             example_code = str(example["code"])
             retrieved_cve = example.get("cve", "")
             retrieved_cve_normalized = normalize_cve(retrieved_cve)
-            rows.append(
-                {
-                    "query_sample_id": query.get("sample_id", args.start + query_offset),
-                    "query_index": args.start + query_offset,
-                    "query_label": query.get("label_text", ""),
-                    "query_project": query.get("project", ""),
-                    "query_cve": query_cve,
-                    "query_code_chars": len(query_code),
-                    "query_code_lines": line_count(query_code),
-                    "query_codebert_tokens": query_tokens,
-                    "query_truncated_for_embedding": query_tokens > retriever.embedding_max_length,
-                    "embedding_token_window": embedding_window,
-                    "rank": rank,
-                    "faiss_l2_distance": float(distance),
-                    "retrieved_index": int(retrieved_index),
-                    "retrieved_sample_id": example.get("sample_id", ""),
-                    "retrieved_label": example.get("label_text", ""),
-                    "label_matches_query": example.get("label_text", "") == query.get("label_text", ""),
-                    "retrieved_project": example.get("project", ""),
-                    "retrieved_cve": retrieved_cve,
-                    "retrieved_cve_normalized": retrieved_cve_normalized,
-                    "same_cve": cve_matches(query_cve, retrieved_cve_normalized),
-                    "retrieved_dataset_type": example.get("dataset_type", ""),
-                    "retrieved_source": example.get("source", ""),
-                    "retrieved_code_chars": len(example_code),
-                    "retrieved_code_lines": line_count(example_code),
-                    "retrieved_codebert_tokens": count_tokens(tokenizer, example_code),
-                    "lexical_jaccard": lexical_jaccard(query_code, example_code),
-                    "query_snippet": snippet(query_code, args.snippet_chars),
-                    "retrieved_snippet": snippet(example_code, args.snippet_chars),
-                }
-            )
+            row = {
+                "query_sample_id": query.get("sample_id", args.start + query_offset),
+                "query_index": args.start + query_offset,
+                "query_label": query.get("label_text", ""),
+                "query_project": query.get("project", ""),
+                "query_cve": query_cve,
+                "query_code_chars": len(query_code),
+                "query_code_lines": line_count(query_code),
+                "query_codebert_tokens": query_tokens,
+                "query_truncated_for_embedding": query_tokens > retriever.embedding_max_length,
+                "embedding_token_window": embedding_window,
+                "rank": rank,
+                "faiss_l2_distance": float(distance),
+                "retrieved_index": int(retrieved_index),
+                "retrieved_sample_id": example.get("sample_id", ""),
+                "retrieved_label": example.get("label_text", ""),
+                "label_matches_query": example.get("label_text", "") == query.get("label_text", ""),
+                "retrieved_project": example.get("project", ""),
+                "retrieved_cve": retrieved_cve,
+                "retrieved_cve_normalized": retrieved_cve_normalized,
+                "same_cve": cve_matches(query_cve, retrieved_cve_normalized),
+                "retrieved_dataset_type": example.get("dataset_type", ""),
+                "retrieved_source": example.get("source", ""),
+                "retrieved_code_chars": len(example_code),
+                "retrieved_code_lines": line_count(example_code),
+                "retrieved_codebert_tokens": count_tokens(tokenizer, example_code),
+                "lexical_jaccard": lexical_jaccard(query_code, example_code),
+                "query_snippet": snippet(query_code, args.snippet_chars),
+                "retrieved_snippet": snippet(example_code, args.snippet_chars),
+            }
+            if args.include_full_traces:
+                row.update(
+                    {
+                        "query_full_trace": query_code,
+                        "retrieved_full_trace": example_code,
+                    }
+                )
+            rows.append(row)
 
     output_path = Path(args.output_csv)
     output_path.parent.mkdir(parents=True, exist_ok=True)

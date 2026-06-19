@@ -1,0 +1,287 @@
+file_name,unique_id,target,vulnerable_line_numbers,project,cve,source_signature_path,commit_hash,dataset_type,processed_func
+1,1,1,1,patch__CVE-2019-13638,CVE-2019-13638,,,test,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+sprintf (buf, '%s %s%s', editor_program, verbosity == VERBOSE ? '' : '- ', outname);
+execl ('/bin/sh', 'sh', '-c', buf, (char *) 0);
+"
+2,2,0,,patch__CVE-2019-13638,CVE-2019-13638,,,test,"outfile = xstrdup (optarg);
+outname = outfile;
+outfd = make_tempfile (&TMPOUTNAME, 'o', outname, O_WRONLY | binary_transput, instat.st_mode & S_IRWXUGO);
+int make_tempfile (char const **name, char letter, char const *real_name, int flags, mode_t mode)
+dirname = dir_name (real_name);
+sprintf (template, '%s/%s.%cXXXXXX', dirname, basename, letter);
+*name = template;
+do_ed_script (inname, TMPOUTNAME, &TMPOUTNAME_needs_removal, outstate.ofp);
+void do_ed_script (char const *inname, char const *outname, bool *outname_needs_removal, FILE *ofp)
+execlp (editor_program, editor_program, '-', outname, (char  *) NULL);
+"
+3,3,1,1,php-src__CVE-2015-8617,CVE-2015-8617,,,test,"
+zend_throw_or_error(fetch_type, NULL, ""Class '%s' not found"", ZSTR_VAL(class_name));
+static void zend_throw_or_error(int fetch_type, zend_class_entry *exception_ce, const char *format, ...)
+zend_vspprintf(&message, 0, format, va);
+zend_throw_error(exception_ce, message);
+ZEND_API ZEND_COLD void zend_throw_error(zend_class_entry *exception_ce, const char *format, ...)
+zend_vspprintf(&message, 0, format, va);
+"
+4,4,0,,php-src__CVE-2015-8617,CVE-2015-8617,,,test,"
+zend_throw_or_error(fetch_type, NULL, ""Class '%s' not found"", ZSTR_VAL(class_name));
+static void zend_throw_or_error(int fetch_type, zend_class_entry *exception_ce, const char *format, ...)
+zend_vspprintf(&message, 0, format, va);
+zend_throw_error(exception_ce, ""%s"", message);
+ZEND_API ZEND_COLD void zend_throw_error(zend_class_entry *exception_ce, const char *format, ...)
+zend_vspprintf(&message, 0, format, va);
+"
+5,5,1,1,spice-vdagent__CVE-2017-15108,CVE-2017-15108,,,test,"
+udscs_do_read(&conn);
+static void udscs_do_read(struct udscs_connection **conp)
+udscs_read_complete(connp);
+conn->read_callback(connp, &conn->header, conn->data.buf);
+static void daemon_read_complete(struct udscs_connection **connp, struct udscs_message_header *header, uint8_t *data)
+VDAgent *agent = udscs_get_user_data(*connp);
+void *udscs_get_user_data(struct udscs_connection *conn)
+return conn->user_data;
+vdagent_file_xfers_data(agent->xfers, (VDAgentFileXferDataMessage *)data);
+void vdagent_file_xfers_data(struct vdagent_file_xfers *xfers, VDAgentFileXferDataMessage *msg)
+snprintf(buf, PATH_MAX, ""xdg-open '%s'&"", xfers->save_dir);
+status = system(buf);
+"
+6,6,0,,spice-vdagent__CVE-2017-15108,CVE-2017-15108,,,test,"
+udscs_do_read(&conn);
+static void udscs_do_read(struct udscs_connection **conp)
+udscs_read_complete(connp);
+conn->read_callback(connp, &conn->header, conn->data.buf);
+static void daemon_read_complete(struct udscs_connection **connp, struct udscs_message_header *header, uint8_t *data)
+VDAgent *agent = udscs_get_user_data(*connp);
+void *udscs_get_user_data(struct udscs_connection *conn)
+return conn->user_data;
+vdagent_file_xfers_data(agent->xfers, (VDAgentFileXferDataMessage *)data);
+void vdagent_file_xfers_data(struct vdagent_file_xfers *xfers, VDAgentFileXferDataMessage *msg)
+gchar *argv[] = { ""xdg-open"", xfers->save_dir, NULL };
+if (!g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error))
+"
+7,7,1,1,php-src__CVE-2015-8617,CVE-2015-8617,,,test,"
+size_t len = php_stream_read(s, buf, SAPI_POST_HANDLER_BUFSIZ);
+smart_str_appendl(&post_data.str, buf, len);
+if (SUCCESS != add_post_vars(arr, &post_data, 0 TSRMLS_CC)) {
+static inline int add_post_vars(zval *arr, post_var_data_t *vars, zend_bool eof)
+while (add_post_var(arr, vars, eof TSRMLS_CC)) {
+static zend_bool add_post_var(zval *arr, post_var_data_t *var, zend_bool eof)
+vsep = memchr(var->ptr, '&', var->end - var->ptr);
+"
+8,8,0,,php-src__CVE-2015-8617,CVE-2015-8617,,,test,"
+size_t len = php_stream_read(s, buf, SAPI_POST_HANDLER_BUFSIZ);
+smart_str_appendl(&post_data.str, buf, len);
+if (SUCCESS != add_post_vars(arr, &post_data, 0 TSRMLS_CC)) {
+static inline int add_post_vars(zval *arr, post_var_data_t *vars, zend_bool eof)
+while (add_post_var(arr, vars, eof TSRMLS_CC)) {
+static zend_bool add_post_var(zval *arr, post_var_data_t *var, zend_bool eof)
+start = var->ptr + var->already_scanned;
+vsep = memchr(start, '&', var->end - start);
+"
+9,9,1,1,rsyslog__CVE-2017-12588,CVE-2017-12588,,,test,"
+CHKiRet(actionPrepare(pThis, pWti));
+CHKiRet(pThis->pMod->mod.om.createWrkrInstance(&(pWti->actWrkrInfo[pThis->iActionNbr].actWrkrData), pThis->pModData));
+CHKiRet(actionCallDoAction(pThis, actParams, pWti));
+iRet = pThis->pMod->mod.om.doAction(param, pWti->actWrkrInfo[pThis->iActionNbr].actWrkrData);
+static rsRetVal doAction(void * pMsgData, wrkrInstanceData_t __attribute__((unused)) *pWrkrData){
+instanceData *pData = pWrkrData->pData;
+iRet = writeZMQ(ppString[0], pData);
+CHKiRet(initZMQ(pData));
+if(-1 == zsocket_bind(pData->socket, (char*)pData->description)) {
+"
+10,10,0,,rsyslog__CVE-2017-12588,CVE-2017-12588,,,test,"
+CHKiRet(actionPrepare(pThis, pWti));
+CHKiRet(pThis->pMod->mod.om.createWrkrInstance(&(pWti->actWrkrInfo[pThis->iActionNbr].actWrkrData), pThis->pModData));
+CHKiRet(actionCallDoAction(pThis, actParams, pWti));
+iRet = pThis->pMod->mod.om.doAction(param, pWti->actWrkrInfo[pThis->iActionNbr].actWrkrData);
+static rsRetVal doAction(void * pMsgData, wrkrInstanceData_t __attribute__((unused)) *pWrkrData){
+instanceData *pData = pWrkrData->pData;
+iRet = writeZMQ(ppString[0], pData);
+CHKiRet(initZMQ(pData));
+if(-1 == zsocket_bind(pData->socket, ""%s"", (char*)pData->description)) {
+"
+11,11,1,1,plasma-workspace__CVE-2018-6791,CVE-2018-6791,,,test,"
+void SolidUiServer::showActionsDialog(const QString &udi, const QStringList &desktopFiles)
+foreach (const QString &desktop, desktopFiles) {
+const QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, ""solid/actions/""+desktop)
+QList<KServiceAction> services = KDesktopFileActions::userDefinedServices(filePath, true);
+foreach (const KServiceAction &service, services) {
+action->setService(service);
+m_service = service;
+new DelayedExecutor(m_service, device);
+DelayedExecutor::DelayedExecutor(const KServiceAction &service, Solid::Device &device): m_service(service)
+QString exec = m_service.exec();
+mx.expandMacros(exec);
+KRun::runCommand(exec, QString(), m_service.icon(), 0);
+"
+12,12,0,,plasma-workspace__CVE-2018-6791,CVE-2018-6791,,9db872d,test,"
+void SolidUiServer::showActionsDialog(const QString &udi, const QStringList &desktopFiles)
+foreach (const QString &desktop, desktopFiles) {
+const QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, ""solid/actions/""+desktop)
+QList<KServiceAction> services = KDesktopFileActions::userDefinedServices(filePath, true);
+foreach (const KServiceAction &service, services) {
+action->setService(service);
+m_service = service;
+new DelayedExecutor(m_service, device);
+DelayedExecutor::DelayedExecutor(const KServiceAction &service, Solid::Device &device): m_service(service)
+QString exec = m_service.exec();
+mx.expandMacrosShellQuote(exec);
+KRun::runCommand(exec, QString(), m_service.icon(), 0);
+"
+13,13,1,1,shadowsocks-libev__CVE-2017-15924,CVE-2017-15924,,,test,"r   = recvfrom(manager->fd, buf, BUF_SIZE, 0, (struct sockaddr *)&claddr, &len);
+struct server *server = get_server(buf, r);
+int ret = add_server(manager, server);
+char *cmd = construct_command_line(manager, server);
+if (server->method) method = server->method;
+snprintf(cmd, BUF_SIZE, '%s -m %s --manager-address %s -f %s/.shadowsocks_%s.pid -c %s/.shadowsocks_%s.conf`', executable, method, manager->manager_address, working_dir, server->port, working_dir, server->port);
+if (system(cmd) == -1) {
+"
+14,14,0,,shadowsocks-libev__CVE-2017-15924,CVE-2017-15924,,,test,"r   = recvfrom(manager->fd, buf, BUF_SIZE, 0, (struct sockaddr *)&claddr, &len);
+struct server *server = get_server(buf, r);
+int ret = add_server(manager, server);
+char *cmd = construct_command_line(manager, server);
+snprintf(cmd, BUF_SIZE, '%s --manager-address %s -f %s/.shadowsocks_%d.pid -c %s/.shadowsocks_%d.conf', executable, manager->manager_address, working_dir, port, working_dir, port);
+"
+15,15,1,1,openjpeg__CVE-2019-12973,CVE-2019-12973,,,test,"
+image = bmptoimage(parameters.infile, &parameters);
+opj_image_t* bmptoimage(const char *filename, opj_cparameters_t *parameters)
+IN = fopen(filename, ""rb"");
+if (!bmp_read_info_header(IN, &Info_h)) {
+static OPJ_BOOL bmp_read_info_header(FILE* IN, OPJ_BITMAPINFOHEADER* header)
+header->biWidth  = (OPJ_UINT32)getc(IN);
+l_result = bmp_read_rle8_data(IN, pData, stride, Info_h.biWidth,
+bmp8toimage(pData, stride, image, pLUT);
+bSuccess = opj_start_compress(l_codec, image, l_stream);
+if (! opj_write_tile(l_codec, i, l_data, l_data_size, l_stream)) {
+return l_codec->m_codec_data.m_compression.opj_write_tile(l_codec->m_codec,
+OPJ_BOOL opj_j2k_write_tile(opj_j2k_t * p_j2k,
+if (! opj_j2k_post_write_tile(p_j2k, p_stream, p_manager)) {
+if (! opj_j2k_write_first_tile_part(p_j2k, l_current_data, &l_nb_bytes_written,
+l_tcd = p_j2k->m_tcd;
+if (! opj_j2k_write_sod(p_j2k, l_tcd, p_data, &l_current_nb_bytes_written,
+static OPJ_BOOL opj_j2k_write_sod(opj_j2k_t *p_j2k, opj_tcd_t * p_tile_coder,
+if (! opj_tcd_encode_tile(p_tile_coder, p_j2k->m_current_tile_number, p_data
+OPJ_BOOL opj_tcd_encode_tile(opj_tcd_t *p_tcd,
+if (! opj_tcd_t1_encode(p_tcd)) {
+if (! opj_t1_encode_cblks(l_t1, p_tcd->tcd_image->tiles, l_tcp, l_mct_norms,
+OPJ_BOOL opj_t1_encode_cblks(opj_t1_t *t1, opj_tcd_tile_t *tile,
+for (compno = 0; compno < tile->numcomps; ++compno) {
+opj_tcd_tilecomp_t* tilec = &tile->comps[compno];
+for (resno = 0; resno < tilec->numresolutions; ++resno) {
+opj_tcd_resolution_t *res = &tilec->resolutions[resno];
+for (bandno = 0; bandno < res->numbands; ++bandno) {
+opj_tcd_band_t* OPJ_RESTRICT band = &res->bands[bandno];
+for (precno = 0; precno < res->pw * res->ph; ++precno) {
+opj_tcd_precinct_t *prc = &band->precincts[precno];
+for (cblkno = 0; cblkno < prc->cw * prc->ch; ++cblkno) {
+"
+16,16,0,,openjpeg__CVE-2019-12973,CVE-2019-12973,,,test,"
+image = bmptoimage(parameters.infile, &parameters);
+opj_image_t* bmptoimage(const char *filename, opj_cparameters_t *parameters)
+IN = fopen(filename, ""rb"");
+if (!bmp_read_info_header(IN, &Info_h)) {
+static OPJ_BOOL bmp_read_info_header(FILE* IN, OPJ_BITMAPINFOHEADER* header)
+header->biWidth  = (OPJ_UINT32)getc(IN);
+l_result = bmp_read_rle8_data(IN, pData, stride, Info_h.biWidth,
+OPJ_UINT8 *pix;
+pix = pData;
+x = y = written = 0U;
+for (j = 0; (j < c) && (x < width) && ((OPJ_SIZE_T)pix < (OPJ_SIZE_T)beyond); j++, x++, pix++) {
+c1_int = getc(IN);
+c1 = (OPJ_UINT8)c1_int;
+*pix = c1;
+written++;
+if (written != width * height) { return OPJ_FALSE; }
+"
+17,17,1,1,radare2__CVE-2019-16718,CVE-2019-16718,,,test,"
+RList *symbols = r_bin_get_symbols (r->bin);
+r_list_foreach (symbols, iter, symbol) {
+char *r_symbol_name = r_str_escape_utf8 (symbol->name, false, true);
+char *module = strdup (r_symbol_name);
+char *p = strstr (module, "".dll_"");
+char *symname = __filterShell (p + 5);
+r_cons_printf (""k bin/pe/%s/%d=%s.%s\n"", module, symbol->ordinal, r->bin->prefix, symname);
+ptr = str = r_core_cmd_str (core, inp);
+char *p = r_str_append (strdup (ptr), filter);
+r_core_cmd0 (core, p);
+R_API int r_core_cmd0(RCore *core, const char *cmd) {
+return r_core_cmd (core, cmd, 0);
+R_API int r_core_cmd(RCore *core, const char *cstr, int log) {
+r_str_cpy (cmd, cstr);
+for (rcmd = cmd;;) {
+ret = r_core_cmd_subst (core, rcmd);
+static int r_core_cmd_subst(RCore *core, char *cmd) {
+icmd = strdup (cmd);
+cmd = r_str_trim_head_tail (icmd);
+ret = r_core_cmd_subst_i (core, cmd, colon, (rep == orep - 1) ? &tmpseek : NULL);
+cmd = r_str_trim_head_tail (cmd);
+ptr = strchr (cmd, '`');
+str = r_core_cmd_str_pipe (core, ptr + 1);
+R_API char *r_core_cmd_str_pipe(RCore *core, const char *cmd) {
+char *_cmd = strdup (cmd);
+r_core_cmd_subst (core, _cmd);
+icmd = strdup (cmd);
+cmd = r_str_trim_head_tail (icmd);
+ret = r_core_cmd_subst_i (core, cmd, colon, (rep == orep - 1) ? &tmpseek : NULL);
+cmd = r_str_trim_head_tail (cmd);
+rc = cmd? r_cmd_call (core->rcmd, r_str_trim_head (cmd)): false;
+static int cmd_system(void *data, const char *input) {
+char *cmd = r_core_sysenv_begin (core, input);
+ret = r_sys_cmd (cmd);
+R_API int r_sys_cmd(const char *str) {
+return r_sandbox_system (str, 1);
+R_API int r_sandbox_system (const char *x, int n) {
+return system (x);
+"
+18,18,0,,radare2__CVE-2019-16718,CVE-2019-16718,,,test,"
+RList *symbols = r_bin_get_symbols (r->bin);
+r_list_foreach (symbols, iter, symbol) {
+char *r_symbol_name = r_str_escape_utf8 (symbol->name, false, true);
+char *module = strdup (r_symbol_name);
+char *p = strstr (module, "".dll_"");
+char *symname = __filterShell (p + 5);
+r_cons_printf (""\""k bin/pe/%s/%d=%s.%s\""\n"",module, symbol->ordinal, r->bin->prefix, symname);
+"
+19,19,1,1,ghostpdl__CVE-2018-16863,CVE-2018-16863,,,test,"
+int gdev_prn_put_params(gx_device * pdev, gs_param_list * plist)
+gx_device_printer * const ppdev = (gx_device_printer *)pdev;
+switch (code = param_read_string(plist, (param_name = ""OutputFile""), &ofs)) {
+if (pdev->LockSafetyParams && bytes_compare(ofs.data, ofs.size, (const byte *)ppdev->fname, strlen(ppdev->fname))) {
+memcpy(ppdev->fname, ofs.data, ofs.size);
+code = gdev_prn_open_printer(pdev, 1);
+return gdev_prn_open_printer_seekable(pdev, binary_mode, false);
+gx_device_printer * const ppdev = (gx_device_printer *)pdev;
+int code = gx_device_open_output_file(pdev, ppdev->fname, binary_mode, seekable, &ppdev->file);
+int gx_device_open_output_file(const gx_device * dev, char *fname, bool binary, bool positionable, FILE ** pfile)
+code = gx_parse_output_file_name(&parsed, &fmt, fname, strlen(fname), dev->memory);
+int gx_parse_output_file_name(gs_parsed_file_name_t *pfn, const char **pfmt, const char *fname, uint fnlen, gs_memory_t *memory)
+code = gs_parse_file_name(pfn, fname, fnlen, memory);
+int gs_parse_file_name(gs_parsed_file_name_t * pfn, const char *pname, uint len, const gs_memory_t *memory)
+pdelim = memchr(pname + 1, '%', len - 1);
+pfn->fname = pdelim;
+code = parsed.iodev->procs.gp_fopen(parsed.iodev, parsed.fname, fmode, pfile, NULL, 0);
+static int pipe_fopen(gx_io_device * iodev, const char *fname, const char *access, FILE ** pfile, char *rfname, uint rnamelen)
+*pfile = popen((char *)fname, (char *)access);
+"
+20,20,0,,ghostpdl__CVE-2018-16863,CVE-2018-16863,,,test,"
+saveLockSafety = gs_currentdevice_inline(pgs)->LockSafetyParams;
+if ((code = gs_setdevice_no_erase(pgs, ndev)) < 0)
+int gs_setdevice_no_erase(gs_gstate * pgs, gx_device * dev)
+gs_setdevice_no_init(pgs, dev);
+rc_assign(pgs->device, dev, ""gs_setdevice_no_init"");
+gs_currentdevice_inline(pgs)->LockSafetyParams = saveLockSafety;
+code = gs_putdeviceparams(dev, (gs_param_list *) & list);
+int gs_putdeviceparams(gx_device * dev, gs_param_list * plist)
+code = (*dev_proc(dev, put_params)) (dev, plist);
+int gdev_prn_put_params(gx_device * pdev, gs_param_list * plist)
+gx_device_printer * const ppdev = (gx_device_printer *)pdev;
+switch (code = param_read_string(plist, (param_name = ""OutputFile""), &ofs)) {
+if (pdev->LockSafetyParams && bytes_compare(ofs.data, ofs.size, (const byte *)ppdev->fname, strlen(ppdev->fname))) {
+"

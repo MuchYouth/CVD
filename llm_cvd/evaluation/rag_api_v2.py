@@ -1,4 +1,4 @@
-"""Run API-based few-shot RAG evaluation and save every provider result immediately."""
+"""Run API-based trace-aware RAG v2 evaluation."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from llm_cvd.evaluation.utils import (
     provider_alias_key,
     timed_step,
 )
-from llm_cvd.prompts.templates import SYSTEM_PROMPT, build_few_shot_prompt, parse_label
+from llm_cvd.prompts.templates_v2 import SYSTEM_PROMPT, build_trace_aware_prompt, parse_label
 
 
 class NoOpProgressBar:
@@ -55,7 +55,6 @@ def parse_args() -> argparse.Namespace:
         "--juliet-root",
         dest="rag_dataset_root",
         default="../../juliet-playground/juliet-test-suite-v1.3",
-        help="Root directory for raw Juliet testcases, or a Real_Vul-style CSV for RAG training.",
     )
     parser.add_argument(
         "--target-dataset-csv",
@@ -63,27 +62,20 @@ def parse_args() -> argparse.Namespace:
         "--real-vul-csv",
         dest="target_dataset_csv",
         default="../../juliet-playground/cases/Real_Vul_data.csv",
-        help="CSV file for the target dataset classified in each prompt.",
     )
     parser.add_argument("--providers", default="chatgpt,claude,gemini,grok")
     parser.add_argument("--models", default="", help="Optional provider=model pairs, comma-separated.")
-    parser.add_argument("--k", type=int, default=6)
+    parser.add_argument("--k", type=int, default=6, help="Final reranked examples included in the prompt.")
+    parser.add_argument("--candidate-k", type=int, default=100, help="CodeBERT candidates before trace reranking.")
     parser.add_argument("--max-output-tokens", type=int, default=8)
-    parser.add_argument("--repeats", type=int, default=1, help="Number of repeated API calls per sample/provider.")
+    parser.add_argument("--repeats", type=int, default=1)
     parser.add_argument("--output-dir", default="results")
     parser.add_argument("--run-name", default=None)
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--max-workers", type=int, default=4, help="Maximum concurrent API calls.")
+    parser.add_argument("--max-workers", type=int, default=4)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument(
-        "--retry-errors-from",
-        default=None,
-        help=(
-            "Optional CSV/JSONL result file. When set, only calls that errored in this "
-            "file and do not already have a successful row in this file are queued."
-        ),
-    )
+    parser.add_argument("--retry-errors-from", default=None)
     parser.add_argument("--env-file", default=".env")
     parser.add_argument("--cache-dir", default="cache")
     parser.add_argument("--index-dir", default="indexes")
@@ -94,6 +86,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--rebuild-cache", action="store_true")
     parser.add_argument("--rebuild-index", action="store_true")
+    parser.add_argument("--device", default=None)
     return parser.parse_args()
 
 
@@ -103,6 +96,7 @@ def evaluate_client(
     output_sample_id: str,
     db_name: str,
     k: int,
+    candidate_k: int,
     true_label: str,
     repeat_id: int,
     max_output_tokens: int,
@@ -123,6 +117,7 @@ def evaluate_client(
         "routed_model": result.routed_model,
         "fallback_attempts": result.fallback_attempts,
         "k": k,
+        "candidate_k": candidate_k,
         "repeat_id": repeat_id,
         "true_label": true_label,
         "pred_label": pred_label,
@@ -144,18 +139,22 @@ def main() -> None:
     args = parse_args()
     if args.repeats < 1:
         raise ValueError("--repeats must be at least 1")
+    if args.k < 1:
+        raise ValueError("--k must be at least 1")
+    if args.candidate_k < 1:
+        raise ValueError("--candidate-k must be at least 1")
     load_env_file(args.env_file)
 
     from llm_cvd.data.juliet_loader import load_juliet_experiment_data
     from llm_cvd.llm.providers import make_client, resolve_provider_model
     from llm_cvd.retrieval.rag_retriever import CodeBertFaissRetriever
+    from llm_cvd.retrieval.rag_retriever_v2 import TraceAwareRagRetriever
 
     provider_aliases = [provider.strip() for provider in args.providers.split(",") if provider.strip()]
     model_overrides = parse_model_overrides(args.models)
 
-    log_step("Starting RAG API evaluation")
-    log_step(f"Provider aliases: {', '.join(provider_aliases)}")
-    with timed_step("Load Juliet train and target dataset"):
+    log_step("Starting trace-aware RAG v2 API evaluation")
+    with timed_step("Load train and target dataset"):
         train_records, test_records = load_juliet_experiment_data(
             juliet_root=args.rag_dataset_root,
             real_vul_csv=args.target_dataset_csv,
@@ -164,22 +163,27 @@ def main() -> None:
             seed=args.seed,
             rebuild_cache=args.rebuild_cache,
         )
-    log_step(f"Loaded {len(train_records)} train records and {len(test_records)} test records")
 
-    index_name = args.index_name
-    rag_dataset_path = Path(args.rag_dataset_root)
-    if index_name == "juliet_train_codebert" and rag_dataset_path.is_file():
-        index_name = f"{rag_dataset_path.stem}_codebert"
+    index_name = resolve_index_name(args.index_name, args.rag_dataset_root)
     if args.max_train_samples:
         index_name = f"{index_name}_n{args.max_train_samples}_seed{args.seed}"
     with timed_step(f"Load or build FAISS index '{index_name}'"):
-        retriever = CodeBertFaissRetriever(
+        base_retriever = CodeBertFaissRetriever(
             train_records=train_records,
             index_name=index_name,
             index_dir=Path(args.index_dir),
             rebuild_index=args.rebuild_index,
+            device=args.device,
             embedding_model_name=args.embedding_model_name,
         )
+        retriever = TraceAwareRagRetriever(
+            base_retriever=base_retriever,
+            candidate_k=args.candidate_k,
+            final_k=args.k,
+            train_csv_path=args.rag_dataset_root,
+            target_csv_path=args.target_dataset_csv,
+        )
+
     clients = []
     with timed_step("Initialize API clients"):
         for alias in provider_aliases:
@@ -199,26 +203,17 @@ def main() -> None:
             source_successful, source_errored = load_result_key_sets(retry_path)
         retry_keys = source_errored - source_successful
         retry_sample_ids = {key[0] for key in retry_keys}
-        log_step(
-            f"Retry-errors mode: {len(retry_keys)} failed calls across "
-            f"{len(retry_sample_ids)} samples will be eligible for retry"
-        )
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    run_name = args.run_name or f"{args.db_name}_k{args.k}"
+    run_name = args.run_name or f"{args.db_name}_trace_v2_c{args.candidate_k}_k{args.k}"
     jsonl_path = output_dir / f"{run_name}.jsonl"
     csv_path = output_dir / f"{run_name}.csv"
-
     completed = load_completed_keys(jsonl_path) if args.resume else set()
     ensure_csv_header(csv_path)
-    if completed:
-        log_step(f"Resume enabled: loaded {len(completed)} completed result keys")
-    log_step(f"Writing results to {jsonl_path} and {csv_path}")
 
     stop = len(test_records) if args.limit is None else min(len(test_records), args.start + args.limit)
-    iterator = range(args.start, stop)
-    sample_ids = list(iterator)
+    sample_ids = list(range(args.start, stop))
     if retry_sample_ids is not None:
         sample_ids = [
             sample_id
@@ -226,40 +221,38 @@ def main() -> None:
             if str(test_records[sample_id].get("sample_id", sample_id)) in retry_sample_ids
         ]
     total_expected = len(sample_ids) * len(clients) * args.repeats
-    skipped = 0
-    written = 0
     log_step(
-        f"Evaluating samples {args.start}..{stop - 1} "
-        f"({len(sample_ids)} selected samples x {len(clients)} clients x {args.repeats} repeats = "
-        f"{total_expected} attempts)"
+        f"Evaluating {len(sample_ids)} samples x {len(clients)} clients x "
+        f"{args.repeats} repeats = {total_expected} attempts"
     )
 
     selected_rows = [test_records[sample_id] for sample_id in sample_ids]
     with timed_step(
-        f"Retrieve top-{args.k} examples for {len(selected_rows)} samples "
-        f"(batch_size={args.retrieval_batch_size})"
+        f"Retrieve CodeBERT top-{args.candidate_k}, rerank top-{args.k} "
+        f"for {len(selected_rows)} samples"
     ):
-        retrieved_examples = retriever.retrieve_many(
-            [str(row["code"]) for row in selected_rows],
+        retrieved_examples = retriever.retrieve_many_records(
+            selected_rows,
             k=args.k,
             batch_size=args.retrieval_batch_size,
-            desc="Embedding target records",
         )
         prompts = [
-            build_few_shot_prompt(examples, str(row["code"]))
+            build_trace_aware_prompt(
+                examples,
+                str(row["code"]),
+                target_trace=retriever.abstract_query_record(row).to_dict(),
+            )
             for row, examples in zip(selected_rows, retrieved_examples)
         ]
 
-    max_workers = max(1, args.max_workers)
-    log_step(f"Using up to {max_workers} concurrent API workers")
+    skipped = 0
+    written = 0
     api_progress = make_progress_bar(total_expected, "API calls")
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+    with ThreadPoolExecutor(max_workers=max(1, args.max_workers)) as executor:
         try:
             for sample_id, row, prompt in zip(sample_ids, selected_rows, prompts):
-                sample_started = time.perf_counter()
                 output_sample_id = str(row.get("sample_id", sample_id))
                 true_label = str(row["label_text"])
-
                 futures = []
                 for repeat_id in range(args.repeats):
                     for client in clients:
@@ -267,18 +260,11 @@ def main() -> None:
                         if retry_keys is not None and key not in retry_keys:
                             skipped += 1
                             api_progress.update(1)
-                            api_progress.set_postfix(written=written, skipped=skipped)
                             continue
                         if key in completed:
                             skipped += 1
                             api_progress.update(1)
-                            api_progress.set_postfix(written=written, skipped=skipped)
                             continue
-
-                        log_step(
-                            f"Queueing {client.provider}/{client.model} for sample {output_sample_id} "
-                            f"(repeat {repeat_id + 1}/{args.repeats})"
-                        )
                         futures.append(
                             executor.submit(
                                 evaluate_client,
@@ -287,12 +273,12 @@ def main() -> None:
                                 output_sample_id,
                                 args.db_name,
                                 args.k,
+                                args.candidate_k,
                                 true_label,
                                 repeat_id,
                                 args.max_output_tokens,
                             )
                         )
-
                 for future in as_completed(futures):
                     key, record, status = future.result()
                     append_record(jsonl_path, csv_path, record)
@@ -304,10 +290,6 @@ def main() -> None:
                         f"Saved {record['provider']}/{record['model']} sample {output_sample_id} "
                         f"repeat {record['repeat_id']}: {status}, latency={record['latency_sec']:.3f}s"
                     )
-                log_step(
-                    f"Finished sample {output_sample_id} in "
-                    f"{format_seconds(time.perf_counter() - sample_started)}"
-                )
         finally:
             api_progress.close()
 
@@ -315,6 +297,13 @@ def main() -> None:
         f"Done. wrote={written}, skipped={skipped}, "
         f"elapsed={format_seconds(time.perf_counter() - run_started)}"
     )
+
+
+def resolve_index_name(index_name: str, rag_dataset_root: str) -> str:
+    dataset_path = Path(rag_dataset_root)
+    if index_name == "juliet_train_codebert" and dataset_path.is_file():
+        return f"{dataset_path.stem}_codebert"
+    return index_name
 
 
 if __name__ == "__main__":

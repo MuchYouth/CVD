@@ -92,6 +92,36 @@ python3 -m llm_cvd.evaluation.baseline_api \
 
 일부 샘플만 테스트하려면 `--start 0 --limit 5`처럼 범위를 제한합니다.
 
+### FreeLLMAPI로 GPT-4o 평가
+
+FreeLLMAPI는 OpenAI-compatible endpoint이므로 `freellm` provider로 사용할 수 있습니다.
+먼저 FreeLLMAPI dashboard에서 unified API key를 발급한 뒤 `llm_cvd/.env`에 설정합니다.
+
+```dotenv
+FREELLMAPI_BASE_URL=http://localhost:3001/v1
+FREELLMAPI_API_KEY=freellmapi-...
+FREELLMAPI_MODEL=gpt-4o
+```
+
+Zero-shot smoke test는 다음처럼 실행합니다.
+
+```bash
+python3 -m llm_cvd.evaluation.baseline_api \
+  --target-dataset-csv dataset/cve_Real_Vul_data.csv \
+  --providers freellm \
+  --models freellm=gpt-4o \
+  --limit 1 \
+  --max-workers 1 \
+  --output-dir llm_cvd/results \
+  --run-name cve_zeroshot_freellm_gpt4o_smoke \
+  --env-file llm_cvd/.env
+```
+
+FreeLLMAPI가 실제로 어떤 upstream provider/model로 라우팅했는지는 결과 파일의
+`routed_provider`, `routed_model`, `fallback_attempts` 컬럼에 저장됩니다.
+Dashboard 또는 `/v1/models`에서 GPT-4o 모델 ID가 다르게 보이면
+`--models freellm=<실제 모델 ID>`로 바꿔 실행합니다.
+
 ## Few-Shot RAG 평가
 
 ```bash

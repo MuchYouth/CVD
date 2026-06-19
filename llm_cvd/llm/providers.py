@@ -33,6 +33,9 @@ class LLMResult:
     total_tokens: int | None
     latency_sec: float
     error: str | None = None
+    routed_provider: str | None = None
+    routed_model: str | None = None
+    fallback_attempts: int | None = None
 
 
 class UsageTracker:
@@ -68,6 +71,7 @@ MODEL_ENV_BY_PROVIDER = {
     "claude": "CLAUDE_MODEL",
     "gemini": "GEMINI_MODEL",
     "grok": "GROK_MODEL",
+    "freellm": "FREELLMAPI_MODEL",
 }
 
 
@@ -171,7 +175,98 @@ class ExperimentClient:
             pass
 
 
-def make_client(provider: str, model: str | None = None) -> ExperimentClient:
+class FreeLLMAPIClient:
+    """OpenAI-compatible experiment client for a local FreeLLMAPI proxy."""
+
+    def __init__(self, model: str | None = None) -> None:
+        try:
+            import openai
+        except ModuleNotFoundError as exc:
+            raise RuntimeError(
+                "The openai package is required for FreeLLMAPI. "
+                "Install project requirements before running this provider."
+            ) from exc
+
+        self.provider = "freellm"
+        self.model = model or os.getenv("FREELLMAPI_MODEL", "gpt-4o")
+        self.base_url = os.getenv("FREELLMAPI_BASE_URL", "http://localhost:3001/v1")
+        api_key = os.getenv("FREELLMAPI_API_KEY")
+        if not api_key:
+            raise RuntimeError("Set FREELLMAPI_API_KEY before using the freellm provider.")
+        self.client = openai.OpenAI(base_url=self.base_url, api_key=api_key)
+
+    def generate(
+        self,
+        prompt: str,
+        system_prompt: str | None = None,
+        max_tokens: int = 8,
+    ) -> LLMResult:
+        start = time.perf_counter()
+        try:
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "user", "content": prompt})
+
+            response, headers = self._create_chat_completion(messages, max_tokens)
+            usage = getattr(response, "usage", None)
+            input_tokens = getattr(usage, "prompt_tokens", None) if usage else None
+            output_tokens = getattr(usage, "completion_tokens", None) if usage else None
+            total_tokens = getattr(usage, "total_tokens", None) if usage else None
+            if total_tokens is None and input_tokens is not None and output_tokens is not None:
+                total_tokens = input_tokens + output_tokens
+
+            routed_provider, routed_model = parse_routed_via(headers.get("x-routed-via"))
+            fallback_attempts = parse_int_header(headers.get("x-fallback-attempts"))
+            return LLMResult(
+                provider=self.provider,
+                model=self.model,
+                text=response.choices[0].message.content,
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+                total_tokens=total_tokens,
+                latency_sec=time.perf_counter() - start,
+                routed_provider=routed_provider,
+                routed_model=routed_model,
+                fallback_attempts=fallback_attempts,
+            )
+        except Exception as exc:
+            return LLMResult(
+                provider=self.provider,
+                model=self.model,
+                text=None,
+                input_tokens=None,
+                output_tokens=None,
+                total_tokens=None,
+                latency_sec=time.perf_counter() - start,
+                error=f"{type(exc).__name__}: {exc}",
+            )
+
+    def _create_chat_completion(
+        self,
+        messages: list[dict[str, str]],
+        max_tokens: int,
+    ) -> tuple[Any, dict[str, str]]:
+        create_kwargs = {
+            "model": self.model,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+        }
+        completions = self.client.chat.completions
+        raw_completions = getattr(completions, "with_raw_response", None)
+        if raw_completions is None:
+            return completions.create(**create_kwargs), {}
+
+        raw_response = raw_completions.create(**create_kwargs)
+        headers = {key.lower(): value for key, value in raw_response.headers.items()}
+        return raw_response.parse(), headers
+
+
+def make_client(provider: str, model: str | None = None) -> Any:
+    if normalize_provider(provider) == "freellm":
+        return FreeLLMAPIClient(model=model)
+
     install_llm_api_shims()
     from llm_api.factory import get_llm_client
 
@@ -201,6 +296,8 @@ def normalize_provider(provider: str) -> str:
     lower = provider.lower()
     if lower in {"openai", "gpt"}:
         return "chatgpt"
+    if lower in {"freellmapi", "free"}:
+        return "freellm"
     if lower == "google":
         return "gemini"
     if lower == "xai":
@@ -228,3 +325,21 @@ def infer_provider_from_model(model: str) -> str | None:
 
 def get_client_model(client: Any) -> str:
     return str(getattr(client, "model_name", getattr(client, "model", "")))
+
+
+def parse_routed_via(value: str | None) -> tuple[str | None, str | None]:
+    if not value:
+        return None, None
+    if "/" not in value:
+        return value, None
+    provider, model = value.split("/", 1)
+    return provider or None, model or None
+
+
+def parse_int_header(value: str | None) -> int | None:
+    if value is None:
+        return None
+    try:
+        return int(value)
+    except ValueError:
+        return None

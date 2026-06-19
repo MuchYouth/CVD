@@ -1,0 +1,1 @@
+sample_id,db_name,provider,model,routed_provider,routed_model,fallback_attempts,k,repeat_id,true_label,pred_label,raw_response,is_correct,input_tokens,output_tokens,total_tokens,latency_sec,prompt_char_len,error

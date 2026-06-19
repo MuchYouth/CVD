@@ -15,6 +15,9 @@ RESULT_FIELDS = [
     "db_name",
     "provider",
     "model",
+    "routed_provider",
+    "routed_model",
+    "fallback_attempts",
     "k",
     "repeat_id",
     "true_label",
@@ -46,6 +49,8 @@ def provider_alias_key(alias: str) -> str:
     lower = alias.lower()
     if lower in {"openai", "gpt"}:
         return "chatgpt"
+    if lower in {"freellmapi", "free"}:
+        return "freellm"
     if lower == "google":
         return "gemini"
     if lower == "xai":
