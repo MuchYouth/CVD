@@ -10,4 +10,5 @@ dataset/*.csv
 juliet-playground/
 sim_web/
 tracer/
-top50/llm_cvd/resultStar/
+top50/
+llm_cvd/resultStar/
